@@ -11,7 +11,10 @@ module Vault
   end
 end
 
-require 'vault-tools/sinatra_helpers/html_serializer'
-require 'vault-tools/log'
-require 'vault-tools/web'
+require 'vault-tools/app'
 require 'vault-tools/config'
+require 'vault-tools/log'
+require 'vault-tools/product'
+require 'vault-tools/sinatra_helpers/html_serializer'
+require 'vault-tools/user'
+require 'vault-tools/web'
