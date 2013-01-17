@@ -23,13 +23,13 @@ module Vault
     #
     # @param heroku_id [String] A Heroku user ID, such as
     #   `user1234@heroku.com`.
-    # @raise [RuntimeError] Raised if a malformed Heroku ID is provided.
+    # @raise [ArgumentError] Raised if a malformed Heroku ID is provided.
     # @return [String] A v5 UUID that uniquely represents the user.
     def self.hid_to_uuid(heroku_id)
       if user_id = heroku_id.slice(/^user(\d+)\@heroku\.com$/, 1)
         id_to_uuid(user_id)
       else
-        raise "#{heroku_id} is not a valid Heroku user ID."
+        raise ArgumentError,"#{heroku_id} is not a valid Heroku user ID."
       end
     end
   end

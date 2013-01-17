@@ -22,13 +22,13 @@ module Vault
     # Convert a Heroku app ID into a v5 UUID.
     #
     # @param heroku_id [String] A Heroku app ID, such as `app1234@heroku.com`.
-    # @raise [RuntimeError] Raised if a malformed Heroku ID is provided.
+    # @raise [ArgumentError] Raised if a malformed Heroku ID is provided.
     # @return [String] A v5 UUID that uniquely represents the app.
     def self.hid_to_uuid(heroku_id)
       if app_id = heroku_id.slice(/^app(\d+)\@heroku\.com$/, 1)
         id_to_uuid(app_id)
       else
-        raise "#{heroku_id} is not a valid Heroku app ID."
+        raise ArgumentError, "#{heroku_id} is not a valid Heroku app ID."
       end
     end
   end

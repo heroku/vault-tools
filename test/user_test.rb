@@ -22,10 +22,10 @@ class UserTest < Vault::TestCase
     assert_equal(uuid, Vault::User.hid_to_uuid('user1234@heroku.com'))
   end
 
-  # User.hid_to_uuid raises a RuntimeError if the specified ID doesn't match
+  # User.hid_to_uuid raises a ArgumentError if the specified ID doesn't match
   # the expected format.
   def test_hid_to_uuid_with_invalid_heroku_id
-    error = assert_raises(RuntimeError) do
+    error = assert_raises(ArgumentError) do
       Vault::User.hid_to_uuid('invalid1234@heroku.com')
     end
     assert_equal('invalid1234@heroku.com is not a valid Heroku user ID.',

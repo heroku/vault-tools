@@ -13,6 +13,7 @@ end
 
 require 'vault-tools/app'
 require 'vault-tools/config'
+require 'vault-tools/hid'
 require 'vault-tools/log'
 require 'vault-tools/product'
 require 'vault-tools/sinatra_helpers/html_serializer'
