@@ -4,7 +4,7 @@ module Vault
   module HID
     # Convert a Heroku app ID or user ID into a v5 UUID.
     #
-    # @param heroku_id [String] A Heroku app ID over user ID
+    # @param heroku_id [String] A Heroku app ID or user ID.
     # @raise [ArgumentError] Raised if a malformed Heroku ID is provided.
     # @return [String] A v5 UUID that uniquely represents the app.
     def self.hid_to_uuid(heroku_id)
