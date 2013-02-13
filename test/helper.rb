@@ -1,6 +1,6 @@
 require 'vault-test-tools'
 require 'vault-tools'
 
-module Vault::Test
-  include_in_all EnvironmentHelpers
+class Vault::TestCase
+  include Vault::Test::EnvironmentHelpers
 end

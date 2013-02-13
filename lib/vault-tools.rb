@@ -2,6 +2,7 @@ require "vault-tools/version"
 
 require 'sinatra/base'
 require 'scrolls'
+require 'rack/ssl-enforcer'
 
 module Vault
   def self.require

@@ -20,4 +20,5 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'scrolls'
   gem.add_dependency 'sinatra'
   gem.add_dependency 'uuidtools'
+  gem.add_dependency 'rack-ssl-enforcer'
 end
