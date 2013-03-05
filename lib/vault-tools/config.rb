@@ -18,8 +18,13 @@ module Vault
       env('RACK_ENV') == 'test'
     end
 
-    def app_name; env("APP_NAME"); end
-    def port; env!("PORT").to_i; end
+    def app_name
+      env("APP_NAME")
+    end
+
+    def port
+      env!("PORT").to_i
+    end
 
     def database_url(kind = '')
       kind = "#{kind}_".upcase unless kind.empty?

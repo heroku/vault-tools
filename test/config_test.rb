@@ -1,7 +1,6 @@
 require 'helper'
 
 class ConfigTest < Vault::TestCase
-
   # Config.production? is true when RACK_ENV=production
   def test_production_mode
     set_env 'RACK_ENV', nil
@@ -36,6 +35,8 @@ class ConfigTest < Vault::TestCase
     end
   end
 
+  # Vault::Config.app_name returns the value of the APP_NAME environment
+  # variable.
   def test_app_name
     Vault::Config.app_name.must_equal nil
     set_env 'APP_NAME', "my-app"
