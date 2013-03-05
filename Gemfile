@@ -12,4 +12,5 @@ end
 
 group :test do
   gem 'vault-test-tools', :path => '../vault-test-tools'
+  gem 'minitest'
 end

@@ -1,4 +1,5 @@
 require 'helper'
+require 'minitest/mock'
 
 class ConfigTest < Vault::TestCase
   # Config.production? is true when RACK_ENV=production
@@ -63,5 +64,16 @@ class ConfigTest < Vault::TestCase
     refute Vault::Config.enable_ssl?
     set_env 'VAULT_TOOLS_DISABLE_SSL', 'foo'
     refute Vault::Config.enable_ssl?
+  end
+
+  # Config.remote_env uses Heroku API to read config
+  # vars from apps
+  def test_remote_env
+    api_mock = MiniTest::Mock.new
+    api_response = OpenStruct.new(body: {'DATABASE_URL' => 'postgres:///foo'})
+    Heroku::API.stub(:new, api_mock) do
+      api_mock.expect(:get_config_vars, api_response, ['app'])
+      assert_equal('postgres:///foo', Vault::Config.remote_env('app', 'DATABASE_URL'))
+    end
   end
 end

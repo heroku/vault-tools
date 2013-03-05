@@ -3,6 +3,7 @@ require "vault-tools/version"
 require 'sinatra/base'
 require 'scrolls'
 require 'rack/ssl-enforcer'
+require 'heroku-api'
 
 module Vault
   #require bundler and the proper gems for the ENV
