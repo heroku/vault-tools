@@ -55,6 +55,13 @@ class ConfigTest < Vault::TestCase
     Vault::Config.port.must_equal 3000
   end
 
+  # Config.int(VAR) returns nil or VAR as integer
+  def test_int
+    assert_equal(nil, Vault::Config.int('FOO'))
+    set_env 'FOO', "3000"
+    assert_equal(3000, Vault::Config.int('FOO'))
+  end
+
   # Config.enable_ssl? is true unless VAULT_TOOLS_DISABLE_SSL
   # is set
   def test_enable_ssl

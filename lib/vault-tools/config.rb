@@ -43,5 +43,9 @@ module Vault
     def enable_ssl?
       !env('VAULT_TOOLS_DISABLE_SSL')
     end
+
+    def int(key)
+      env(key) ? env(key).to_i : nil
+    end
   end
 end
