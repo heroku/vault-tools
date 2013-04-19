@@ -48,6 +48,10 @@ module Vault
       env(key) ? env(key).to_i : nil
     end
 
+    def bool?(key)
+      ENV[key] == 'true'
+    end
+
     def sidekiq_concurrency
       int('SIDEKIQ_CONCURRENCY') || 25
     end

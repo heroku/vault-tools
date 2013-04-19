@@ -89,4 +89,16 @@ class ConfigTest < Vault::TestCase
     set_env 'SIDEKIQ_CONCURRENCY', '10'
     assert_equal(10, Vault::Config.sidekiq_concurrency)
   end
+
+  # Config.bool?(var) is only true if the value of var is the string 'true'.
+  # If the var is absent or any other value, it evaluates to false.
+  def test_bool_returns_true
+    assert_equal(false, Vault::Config.bool?('VAULT_BOOLEAN_VAR'))
+    set_env 'VAULT_BOOLEAN_VAR', 'true'
+    assert_equal(true, Vault::Config.bool?('VAULT_BOOLEAN_VAR'))
+    set_env 'VAULT_BOOLEAN_VAR', 'false'
+    assert_equal(false, Vault::Config.bool?('VAULT_BOOLEAN_VAR'))
+    set_env 'VAULT_BOOLEAN_VAR', 'foo'
+    assert_equal(false, Vault::Config.bool?('VAULT_BOOLEAN_VAR'))
+  end
 end
