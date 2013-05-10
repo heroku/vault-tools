@@ -5,13 +5,28 @@ class WebTest < Vault::TestCase
 
   # Anonymous Web Frontend
   def app
-    Class.new(Vault::Web)
+    @app ||= Class.new(Vault::Web)
   end
 
   # Always reload the web class to eliminate test leakage
   def setup
     super
     reload_web!
+  end
+
+  def test_http_basic_auth
+    app.set :basic_password, 'password'
+    app.get '/protected' do
+      protected!
+      'OKIE'
+    end
+
+    get '/protected'
+    assert_equal 401, last_response.status
+    authorize('','password')
+    get '/protected'
+    assert_equal 200, last_response.status
+    assert_equal 'OKIE', last_response.body
   end
 
   # Middleware is attached at load time, so we have to delete the Vault::Web
