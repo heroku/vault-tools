@@ -26,11 +26,20 @@ module Vault
     ENV['TZ'] = 'UTC'
   end
 
+  def self.hack_time_class
+    $stderr.puts "Modifying Time#to_s to use #iso8601"
+    # use send to call private method
+    Time.send(:define_method, :to_s) do
+      self.iso8601
+    end
+  end
+
   # all in one go
   def self.setup
     self.require
     self.load_path
     self.set_timezones
+    self.hack_time_class
   end
 end
 
