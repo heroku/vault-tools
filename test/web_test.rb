@@ -42,8 +42,8 @@ class WebTest < Vault::TestCase
   # requests.
   def test_head_status_check
     head '/'
-    assert_match(/measure=http_200/, Scrolls.stream.string)
-    assert_match(/measure=http_2xx/, Scrolls.stream.string)
+    assert_match(/count#http_200=1/, Scrolls.stream.string)
+    assert_match(/count#http_2xx=1/, Scrolls.stream.string)
     assert_equal(200, last_response.status)
   end
 
@@ -51,8 +51,8 @@ class WebTest < Vault::TestCase
   # response body.
   def test_get_health_check
     get '/health'
-    assert_match(/measure=http_200/, Scrolls.stream.string)
-    assert_match(/measure=http_2xx/, Scrolls.stream.string)
+    assert_match(/count#http_200=1/, Scrolls.stream.string)
+    assert_match(/count#http_2xx=1/, Scrolls.stream.string)
     assert_equal(200, last_response.status)
     assert_equal('OK', last_response.body)
   end
@@ -61,8 +61,8 @@ class WebTest < Vault::TestCase
   # match a known resource.
   def test_head_with_unknown_endpoint
     head '/unknown'
-    assert_match(/measure=http_404/, Scrolls.stream.string)
-    assert_match(/measure=http_4xx/, Scrolls.stream.string)
+    assert_match(/count#http_404=1/, Scrolls.stream.string)
+    assert_match(/count#http_4xx=1/, Scrolls.stream.string)
     assert_equal(404, last_response.status)
   end
 
@@ -70,8 +70,8 @@ class WebTest < Vault::TestCase
   # traceback is also written to the response body to ease debugging.
   def test_error_logs_500
     get '/boom'
-    assert_match(/measure=http_500/, Scrolls.stream.string)
-    assert_match(/measure=http_5xx/, Scrolls.stream.string)
+    assert_match(/count#http_500=1/, Scrolls.stream.string)
+    assert_match(/count#http_5xx=1/, Scrolls.stream.string)
     assert_match(/^RuntimeError: An expected error occurred.$/m,
                  last_response.body)
     assert_equal(500, last_response.status)

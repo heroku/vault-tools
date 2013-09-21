@@ -5,7 +5,7 @@ module Vault
     # @param name [String] The name of the metric.
     def self.count(name)
       name = "#{Config.app_name}.#{name}" if Config.app_name
-      log(measure: name)
+      log("count##{name}" => 1)
     end
 
     # Log an HTTP status code.  Two log metrics are written each time this
@@ -36,8 +36,8 @@ module Vault
         name.gsub(/\/:\w+/, '').           # Remove param names from path.
              gsub("/", "_").               # Replace slash with underscore.
              gsub(/[^A-Za-z0-9\-\_]/, ''). # Only keep subset of chars.
-             slice(1..-1).
-             tap { |name| log(measure: name, val: duration) }
+             slice(1..-1).                 # Strip the leading underscore.
+             tap { |name| log("measure##{name}" => "#{duration}ms") }
       end
     end
 
