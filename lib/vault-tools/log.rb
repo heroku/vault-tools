@@ -58,6 +58,7 @@ module Vault
     #   the log message.
     def self.log(data, &block)
       data['source'] ||= Config.app_deploy if Config.app_deploy
+      data['app'] ||= Config.app_name if Config.app_name
       Scrolls.log(data, &block)
     end
   end

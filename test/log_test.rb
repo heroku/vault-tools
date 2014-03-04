@@ -89,6 +89,12 @@ class LogTest < Vault::TestCase
     assert_equal('', Scrolls.stream.string)
   end
 
+  # Vault::Log.log logs app name in app key by default.
+  def test_log_app_name_by_default
+    Vault::Log.log(integer: 123)
+    assert_equal 'test-app', logged_data['app']
+  end
+
   # Vault::Log.log emits a set of key/value metrics using data from the
   # specified hash.
   def test_log
