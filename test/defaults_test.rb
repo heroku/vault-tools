@@ -44,20 +44,4 @@ class DefaultsTest < Vault::TestCase
     assert_equal('1,2', Config[:array])
     assert_equal(['1','2'], Config.array(:array))
   end
-
-  def test_default_with_app_deploy
-    assert_raises RuntimeError do
-      Config.app_deploy
-    end
-    Config.default(:app_deploy, 'test')
-    assert_equal('test', Config.app_deploy)
-  end
-
-  def test_default_with_app_name
-    assert_raises RuntimeError do
-      Config.app_name
-    end
-    Config.default(:app_name, 'vault-rulez')
-    assert_equal('vault-rulez', Config.app_name)
-  end
 end

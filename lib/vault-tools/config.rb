@@ -90,7 +90,7 @@ module Vault
     #
     # @return [String] The name of the app
     def self.app_name
-      env!("APP_NAME")
+      env("APP_NAME")
     end
 
     # The `APP_DEPLOY` env var is used to identify which deploy of the codebase is
@@ -99,7 +99,7 @@ module Vault
     #
     # @return [String] The deploy/environment of the app
     def self.app_deploy
-      env!("APP_DEPLOY")
+      env("APP_DEPLOY")
     end
 
     # The port to listen on for web requests.
