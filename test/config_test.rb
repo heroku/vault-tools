@@ -31,7 +31,7 @@ class ConfigTest < Vault::TestCase
     end
 
     #teardown
-    Config.shared = {}
+    Config.shared.clear
   end
 
   # Config.env returns the value matching the specified environment

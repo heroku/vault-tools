@@ -3,13 +3,15 @@ module Vault
     @@defaults = {}
     @@shared   = {}
 
+    # Loads config from another app.
     def self.load_shared!(app = nil)
       heroku   = Heroku::API.new
       @@shared = heroku.get_config_vars(app).body
     end
 
-    def self.shared=(other)
-      @@shared = other
+    # @return [Hash] Shared config params from another app
+    def self.shared
+      @@shared
     end
 
     # An environment variable from another app.
