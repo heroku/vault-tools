@@ -45,6 +45,10 @@ module Vault
     Object.const_set(:Config, Vault::Config)
   end
 
+  def self.load_shared_config
+
+  end
+
   # all in one go
   def self.setup
     self.require

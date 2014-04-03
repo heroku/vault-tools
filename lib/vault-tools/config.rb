@@ -1,6 +1,16 @@
 module Vault
   module Config
     @@defaults = {}
+    @@shared   = {}
+
+    def self.load_shared!(app = nil)
+      heroku   = Heroku::API.new
+      @@shared = heroku.get_config_vars(app).body
+    end
+
+    def self.shared=(other)
+      @@shared = other
+    end
 
     # An environment variable from another app.
     #
@@ -56,7 +66,7 @@ module Vault
     def self.[](name)
       var_name = name.to_s.upcase
       default_name = name.to_s.downcase.to_sym
-      ENV[var_name] || @@defaults[default_name]
+      ENV[var_name] || @@defaults[default_name] || @@shared[var_name]
     end
 
     # An environment variable.
