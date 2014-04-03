@@ -3,15 +3,45 @@ module Vault
     @@defaults = {}
     @@shared   = {}
 
+    # Get a Config value
+    #
+    # This is the preferred and uniform way to access config vars because
+    # defaults and shared config are included in the lookup
+    #
+    # Uses defaults and shared if available.  Converts upper-case ENV var names
+    # to lower-case default names.
+    #
+    # Order of precedence is:
+    # 1) app's local ENV
+    # 2) shared config vars
+    # 3) default values
+    #
+    # Config[:foo] == nil
+    #
+    # Config.default(:foo, 'bar')
+    # Config[:foo] == 'bar'
+    #
+    # ENV['FOO'] = 'baz'
+    # Config[:foo] == 'baz'
+    #
+    # @param key [Symbol] The lower-case name of the ENV value
+    # @return [String] The value of the ENV value or default.
+    def self.[](name)
+      var_name = name.to_s.upcase
+      default_name = name.to_s.downcase.to_sym
+      ENV[var_name] || @@shared[var_name] || @@defaults[default_name]
+    end
+
     # Loads config from another app.
     def self.load_shared!(app = nil)
       heroku   = Heroku::API.new
       @@shared = heroku.get_config_vars(app).body
     end
 
-    # @return [Hash] Shared config params from another app
-    def self.shared
-      @@shared
+    # Reset defaults and shared values
+    def self.reset!
+      @@defaults = {}
+      @@shared   = {}
     end
 
     # An environment variable from another app.
@@ -49,26 +79,6 @@ module Vault
     # @return [Hash] The current set of defaults
     def self.defaults
       @@defaults
-    end
-
-    # Get a Config value
-    # Uses defaults if available.  Converts upper-case ENV var names
-    # to lower-case default names.
-    #
-    # Config[:foo] == nil
-    #
-    # Config.default(:foo, 'bar')
-    # Config[:foo] == 'bar'
-    #
-    # ENV['FOO'] = 'baz'
-    # Config[:foo] == 'baz'
-    #
-    # @param key [Symbol] The lower-case name of the ENV value
-    # @return [String] The value of the ENV value or default.
-    def self.[](name)
-      var_name = name.to_s.upcase
-      default_name = name.to_s.downcase.to_sym
-      ENV[var_name] || @@defaults[default_name] || @@shared[var_name]
     end
 
     # An environment variable.
