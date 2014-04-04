@@ -10,6 +10,12 @@ Honeybadger.configure do |config|
   config.api_key = ENV['HONEYBADGER_API_KEY']
 end
 
+# Yes, there's a lot of stuff on STDERR.  But its on
+# stderr and not stdout so you can pipe to /dev/null if
+# you hate it.  These methods do some pretty heavy-handed
+# environment munging and could lead to some hair-pulling
+# errors if you're not aware of whats going on.
+
 module Vault
   #require bundler and the proper gems for the ENV
   def self.require
@@ -45,6 +51,14 @@ module Vault
     Object.const_set(:Config, Vault::Config)
   end
 
+  def self.load_shared_config
+    return unless Config.production?
+    if Config[:config_app]
+      $stderr.puts "Loading shared config from app: #{Config[:config_app]}..."
+      Config.load_shared!(Config[:config_app])
+    end
+  end
+
   # all in one go
   def self.setup
     self.require
@@ -52,6 +66,7 @@ module Vault
     self.set_timezones
     self.hack_time_class
     self.override_global_config
+    self.load_shared_config
   end
 end
 

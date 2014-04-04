@@ -4,6 +4,11 @@ require 'minitest/mock'
 class ConfigTest < Vault::TestCase
   include Vault::Test::EnvironmentHelpers
 
+  def teardown
+    super
+    Config.reset!
+  end
+
   # Config.remote_env uses the Heroku API to read config vars from
   # other apps.
   def test_remote_env
@@ -13,6 +18,23 @@ class ConfigTest < Vault::TestCase
       api_mock.expect(:get_config_vars, api_response, ['app'])
       assert_equal('postgres:///foo',
                    Config.remote_env('app', 'DATABASE_URL'))
+    end
+  end
+
+  # Config.remote_env uses the Heroku API to read config vars from
+  # other apps.
+  def test_shared_config_loads_shared_with_correct_precedence
+    set_env('CONFIG_APP', 'vault-config')
+    api_mock = MiniTest::Mock.new
+    api_response = OpenStruct.new(body: {'HELLO' => 'world'})
+    Heroku::API.stub(:new, api_mock) do
+      api_mock.expect(:get_config_vars, api_response, ['vault-config'])
+      assert_equal(nil, Config[:hello])
+      Config.default(:hello, 'foo')
+      assert_equal('foo', Config[:hello])
+      # this is how we'll call it in the code
+      Config.load_shared!(Config[:config_app])
+      assert_equal('world', Config[:hello])
     end
   end
 
