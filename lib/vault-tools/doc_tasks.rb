@@ -6,7 +6,7 @@ require 'vault-tools/s3'
 namespace :docs do
   desc "Publish Docs to S3"
   task :publish do
-    DOC_BUCKET = "heroku-vault-docs2"
+    DOC_BUCKET = "vault-docs.heroku.com"
     DOC_DIR_NAME = Dir.pwd.split("/").last
 
     # Check for s3cmd CLI
