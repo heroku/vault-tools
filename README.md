@@ -5,22 +5,6 @@ team to enable faster bootstrapping for Ruby projects.
 
 [![Build Status](https://travis-ci.org/heroku/vault-tools.png?branch=master)](https://travis-ci.org/heroku/vault-tools)
 
-## Setting up a development environment
-
-Install the dependencies:
-
-    bundle install --binstubs vendor/bin
-    rbenv rehash
-
-Run the tests:
-
-    vendor/bin/t
-
-Generate the API documentation:
-
-    vendor/bin/d
-
-
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -87,6 +71,23 @@ Includes request logging and health endpoints
     helpers Vault::SinatraHelpers::HtmlSerializer
   end
 ```
+
+## Setting up a development environment
+
+Install the dependencies:
+
+    bundle install --binstubs vendor/bin
+    rbenv rehash
+
+Run the tests:
+
+    vendor/bin/t
+
+Generate the API documentation:
+
+    vendor/bin/d
+
+
 
 ## Contributing
 
