@@ -14,6 +14,8 @@ Add this line to your application's Gemfile:
 
 ## Usage
 
+### `Vault.setup`
+
 calling `Vault.setup` will:
 
 - call `Bundler.require` with the corresponding `RACK_ENV`
