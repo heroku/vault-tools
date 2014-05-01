@@ -54,7 +54,7 @@ Returns `nil` when undefined, otherwise casts to indicated type.
 Config.int(:max_connections)
 ```
 
-### Logging
+### `Vault::Log`
 
 ```ruby
   Log.time(name, t)
@@ -64,7 +64,9 @@ Config.int(:max_connections)
   #  => "measure=true at=foo"
 ```
 
-### Sinatra base class
+### `Vault::Web`
+
+Sinatra base class
 
 Includes request logging and health endpoints
 
