@@ -1,6 +1,5 @@
 require 'vault-test-tools'
 require 'vault-tools'
-require 'aws-sdk'
 require 'rr'
 
 ENV['RACK_ENV'] = 'test'
