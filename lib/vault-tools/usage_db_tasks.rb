@@ -15,6 +15,7 @@ task :pull_usage_schema do
   steps << 'git clone -n git@github.com:heroku/vault-usage --depth 1'
   steps << 'cd vault-usage'
   steps << 'git checkout HEAD db/vault-usage.sql'
+  steps << 'git checkout HEAD db/functions.sql'
   # make sure we don't submodule it
   steps << 'rm -rf .git'
   sh steps.join(' && ')
@@ -24,6 +25,7 @@ desc "Drop and recreate the vault-usage-test database"
 task :create_usage_db => [:drop_usage_db] do
   sh 'createdb vault-usage-test'
   sh 'psql vault-usage-test -f contrib/vault-usage/db/vault-usage.sql'
+  sh 'psql vault-usage-test -f contrib/vault-usage/db/functions.sql'
 end
 
 desc "Drop the vault-usage-test database"
