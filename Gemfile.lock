@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    vault-tools (0.5.6)
+    vault-tools (0.5.7)
       aws-sdk
       fernet (= 2.0.rc2)
       heroku-api
@@ -17,15 +17,15 @@ GEM
   remote: https://rubygems.org/
   specs:
     ansi (1.4.3)
-    aws-sdk (1.52.0)
-      aws-sdk-v1 (= 1.52.0)
-    aws-sdk-v1 (1.52.0)
+    aws-sdk (1.53.0)
+      aws-sdk-v1 (= 1.53.0)
+    aws-sdk-v1 (1.53.0)
       json (~> 1.4)
       nokogiri (>= 1.4.4)
     celluloid (0.16.0)
       timers (~> 4.0.0)
     coderay (1.1.0)
-    excon (0.39.5)
+    excon (0.39.6)
     fernet (2.0.rc2)
       valcro (= 0.1)
     ffi (1.9.3)
@@ -43,7 +43,7 @@ GEM
       excon (~> 0.38)
       multi_json (~> 1.8)
     hitimes (1.2.2)
-    honeybadger (1.16.4)
+    honeybadger (1.16.5)
       json
     json (1.8.1)
     listen (2.7.9)
@@ -72,7 +72,7 @@ GEM
     rb-fsevent (0.9.4)
     rb-inotify (0.9.5)
       ffi (>= 0.5.0)
-    rdoc (4.1.1)
+    rdoc (4.1.2)
       json (~> 1.4)
     rr (1.1.2)
     scrolls (0.3.8)
