@@ -24,8 +24,8 @@ end
 desc "Drop and recreate the vault-usage-test database"
 task :create_usage_db => [:drop_usage_db] do
   sh 'createdb vault-usage-test'
-  sh 'psql vault-usage-test -f contrib/vault-usage/db/vault-usage.sql'
-  sh 'psql vault-usage-test -f contrib/vault-usage/db/functions.sql'
+  sh 'psql --no-psqlrc vault-usage-test -f contrib/vault-usage/db/vault-usage.sql'
+  sh 'psql --no-psqlrc vault-usage-test -f contrib/vault-usage/db/functions.sql'
 end
 
 desc "Drop the vault-usage-test database"
