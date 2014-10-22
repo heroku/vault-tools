@@ -24,10 +24,10 @@ end
 desc "Drop and recreate the core-test database"
 task :create_core_db => [:drop_core_db] do
   sh 'createdb core-test'
-  sh 'psql core-test -c "DROP ROLE IF EXISTS analytics;"'
-  sh 'psql core-test -c "CREATE ROLE analytics ENCRYPTED PASSWORD \'password\' LOGIN;"'
-  sh 'psql core-test -f contrib/core/db/structure.sql'
-  sh 'psql core-test -f contrib/core/db/analytics_grants.sql'
+  sh 'psql --no-psqlrc core-test -c "DROP ROLE IF EXISTS analytics;"'
+  sh 'psql --no-psqlrc core-test -c "CREATE ROLE analytics ENCRYPTED PASSWORD \'password\' LOGIN;"'
+  sh 'psql --no-psqlrc core-test -f contrib/core/db/structure.sql'
+  sh 'psql --no-psqlrc core-test -f contrib/core/db/analytics_grants.sql'
 end
 
 desc "Drop the core-test database"
