@@ -41,6 +41,7 @@ module Vault
     def write(format, opts)
       obj = s3.buckets[bucket_for(format, opts)].objects[path_for(opts)]
       obj.write(opts[:contents])
+      obj
     end
 
     # Get an instance of the S3 client to work with

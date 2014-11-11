@@ -42,9 +42,10 @@ class StatementStoreTest < Vault::TestCase
 
     # Write to S3 updating expectation
     expected = {"bar" => 3}
-    inv.write_json(start_time: '2014-10-01', stop_time: '2014-11-01',
-                   user_hid: 'user9@heroku.com', version: 2,
-                   contents: expected)
+    obj = inv.write_json(start_time: '2014-10-01', stop_time: '2014-11-01',
+                         user_hid: 'user9@heroku.com', version: 2,
+                         contents: expected)
+    assert obj.is_a? StubbedS3::FakeFile
 
     # There after write
     doc = inv.get_json(start_time: '2014-10-01', stop_time: '2014-11-01',
