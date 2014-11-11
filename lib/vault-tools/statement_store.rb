@@ -64,8 +64,8 @@ module Vault
     # Determine the path on S3 for the given invoice
     def path_for(opts = {})
       validate_path_opts(opts)
-      start = DateTime.parse(opts[:start_time].to_s)
-      stop = DateTime.parse(opts[:stop_time].to_s)
+      start = DateTime.parse(opts[:start_time].to_s).strftime('%Y-%m-%d')
+      stop = DateTime.parse(opts[:stop_time].to_s).strftime('%Y-%m-%d')
       user_hid = opts[:user_hid] || "user#{opts[:user_id]}@heroku.com"
       sprintf('%s/%s/%s_v%s', start, stop, user_hid, opts[:version])
     end
