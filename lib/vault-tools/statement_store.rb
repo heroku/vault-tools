@@ -1,6 +1,6 @@
 module Vault
-  # The InvoiceStore knows how to save and retrieve invoices from S3
-  class InvoiceStore
+  # The StatementStore knows how to save and retrieve invoices from S3
+  class StatementStore
     def initialize(opts = {})
       @key_id = opts.fetch(:key_id, ENV['AWS_ACCESS_KEY_ID'])
       @key = opts.fetch(:key, ENV['AWS_SECRET_ACCESS_KEY'])
