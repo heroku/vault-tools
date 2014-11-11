@@ -18,6 +18,7 @@ module Vault
 
     # Write as JSON to S3
     def write_json(opts)
+      opts[:contents] = JSON.dump(opts[:contents])
       write(:json, opts)
     end
 
