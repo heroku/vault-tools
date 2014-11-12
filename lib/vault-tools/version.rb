@@ -1,5 +1,5 @@
 module Vault
   module Tools
-    VERSION = '0.5.13'
+    VERSION = '0.6'
   end
 end

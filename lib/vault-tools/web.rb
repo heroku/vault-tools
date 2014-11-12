@@ -84,7 +84,7 @@ module Vault
     # @return The following responses may be returned by this method:
     #
     #   - *HTTP 200 OK*: Returned if the request was successful.
-    head '/' do
+    head_unprotected '/' do
       status(200)
     end
 
@@ -95,7 +95,7 @@ module Vault
     #
     #   - *HTTP 200 OK*: Returned if the request was successful with `OK` in
     #     the body.
-    get '/health' do
+    get_unprotected '/health' do
       [200, 'OK']
     end
 
@@ -106,7 +106,7 @@ module Vault
     #
     #   - *HTTP 500 Internal Server Error*: Returned with a traceback in the
     #     body.
-    get '/boom' do
+    get_unprotected '/boom' do
       raise "An expected error occurred."
     end
   end
