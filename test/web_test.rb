@@ -84,6 +84,34 @@ class WebTest < Vault::TestCase
     assert_equal 'You may pass', last_response.body
   end
 
+  def test_http_basic_auth_with_default_protected
+    app.set :basic_password, 'password'
+    app.before { protected! }
+    app.get '/protected' do
+      'You may pass'
+    end
+    app.get_unprotected '/unprotected/:name' do |name|
+      "You may pass #{name}"
+    end
+
+    get '/protected'
+    assert_equal 401, last_response.status
+
+    get '/unprotected/Bob'
+    assert_equal 200, last_response.status
+    assert_equal 'You may pass Bob', last_response.body
+
+    authorize('','password')
+    get '/protected'
+    assert_equal 200, last_response.status
+    assert_equal 'You may pass', last_response.body
+
+    authorize('','password')
+    get '/unprotected/Jill'
+    assert_equal 200, last_response.status
+    assert_equal 'You may pass Jill', last_response.body
+  end
+
   # An `http_200` and an `http_2xx` log metric is written for successful
   # requests.
   def test_head_status_check

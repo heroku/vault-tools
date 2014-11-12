@@ -3,10 +3,25 @@ require 'vault-tools/log'
 module Vault
   # Base class for HTTP API services.
   class Web < Sinatra::Base
-    # Store the action for logging purposes.
-    def self.route(verb, action, *)
-      condition { @action = action }
-      super
+    # List of paths that are not protected thus overriding protected!
+    set :unprotected_paths, []
+
+    class << self
+      # Store the action for logging purposes.
+      def route(verb, action, *)
+        condition { @action = action }
+        super
+      end
+
+      # Create :method:_unprotected methods for instances where default
+      # protect! is used
+      %w{get put post delete head options path link unlink}.each do |meth|
+        define_method "#{meth}_unprotected".to_sym do |path, opts = {}, &block|
+          pattern = compile!(meth.upcase, path, block, opts).first
+          set :unprotected_paths, settings.unprotected_paths + [pattern]
+          route meth.upcase, path, opts, &block
+        end
+      end
     end
 
     # HTTP Basic Auth Support
@@ -14,10 +29,15 @@ module Vault
       # Protects an http method.  Returns 401 Not Authorized response
       # when authorized? returns false
       def protected!(*passwords)
-        unless authorized?(passwords)
+        unless unprotected? || authorized?(passwords)
           response['WWW-Authenticate'] = %(Basic realm="Restricted Area")
           throw(:halt, [401, "Not authorized\n"])
         end
+      end
+
+      # Check the list of unprotected_paths and see if any of them match
+      def unprotected?
+        settings.unprotected_paths.any? { |path| path.match(request.path) }
       end
 
       # Check request for HTTP Basic creds and
