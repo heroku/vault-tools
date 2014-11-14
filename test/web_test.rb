@@ -97,6 +97,9 @@ class WebTest < Vault::TestCase
     get '/protected'
     assert_equal 401, last_response.status
 
+    head '/unprotected/Bob'
+    assert_equal 200, last_response.status
+
     get '/unprotected/Bob'
     assert_equal 200, last_response.status
     assert_equal 'You may pass Bob', last_response.body
