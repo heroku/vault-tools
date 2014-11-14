@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    vault-tools (0.6)
+    vault-tools (0.5.15)
       aws-sdk
       fernet (= 2.0.rc2)
       heroku-api

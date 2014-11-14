@@ -19,7 +19,15 @@ module Vault
         define_method "#{meth}_unprotected".to_sym do |path, opts = {}, &block|
           pattern = compile!(meth.upcase, path, block, opts).first
           set :unprotected_paths, settings.unprotected_paths + [pattern]
-          route meth.upcase, path, opts, &block
+          if meth.downcase == 'get'
+            conditions = @conditions.dup
+            route 'GET', path, opts, &block
+
+            @conditions = conditions
+            route 'HEAD', path, opts, &block
+          else
+            route meth.upcase, path, opts, &block
+          end
         end
       end
     end
