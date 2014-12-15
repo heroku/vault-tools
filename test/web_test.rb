@@ -196,8 +196,9 @@ class WebTest < Vault::TestCase
   end
 
   def test_that_request_id_gets_logged
+    request_id = 'JKJK-123'
     mock(Scrolls).log({
-      'request-id' => 'JKJK-123',
+      'request-id' => request_id,
       'msg' => 'Hit logging test!',
       'source' => 'testing',
       'app' => 'test-app'
@@ -206,7 +207,8 @@ class WebTest < Vault::TestCase
       Vault::Log.log('msg' => 'Hit logging test!')
     end
 
-    header 'X_REQUEST_ID', 'JKJK-123'
+    header 'X_REQUEST_ID', request_id
     get '/logging-test'
+    assert_equal request_id, last_response.headers['Request-ID']
   end
 end
