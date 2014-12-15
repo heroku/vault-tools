@@ -194,4 +194,19 @@ class WebTest < Vault::TestCase
     get '/health'
     assert_equal(200, last_response.status)
   end
+
+  def test_that_request_id_gets_logged
+    mock(Scrolls).log({
+      'request-id' => 'JKJK-123',
+      'msg' => 'Hit logging test!',
+      'source' => 'testing',
+      'app' => 'test-app'
+    })
+    app.get '/logging-test' do
+      Vault::Log.log('msg' => 'Hit logging test!')
+    end
+
+    header 'X_REQUEST_ID', 'JKJK-123'
+    get '/logging-test'
+  end
 end

@@ -6,7 +6,17 @@ module Vault
     # List of paths that are not protected thus overriding protected!
     set :unprotected_paths, []
 
+    # Work with request id out of the box
+    def call(env)
+      Thread.current[:request_id] = env['HTTP_X_REQUEST_ID'] || SecureRandom.uuid
+      env['HTTP_X_REQUEST_ID'] = Thread.current[:request_id]
+      status, headers, response = super(env)
+      headers['Request-ID'] = Thread.current[:request_id]
+      [status, headers, response]
+    end
+
     class << self
+
       # Store the action for logging purposes.
       def route(verb, action, *)
         condition { @action = action }
