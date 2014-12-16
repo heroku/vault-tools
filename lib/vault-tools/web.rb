@@ -9,10 +9,36 @@ module Vault
     # Work with request id out of the box
     def call(env)
       Thread.current[:request_id] = env['HTTP_X_REQUEST_ID'] || SecureRandom.uuid
+      if defined? Excon
+        decorate_excon!
+        Excon.defaults[:headers]['X-Request-ID'] = Thread.current[:request_id]
+      end
       env['HTTP_X_REQUEST_ID'] = Thread.current[:request_id]
       status, headers, response = super(env)
       headers['Request-ID'] = Thread.current[:request_id]
       [status, headers, response]
+    end
+
+    def decorate_excon!
+      return unless defined? Excon
+      begin
+        return if Excon.request_id_decorated?
+      rescue
+        Excon.module_eval do
+          def self.request_id_decorated?
+            true
+          end
+        end
+        Excon::Connection.class_eval do
+          alias :stock_initialize :initialize
+          def initialize(params={})
+            stock_initialize(params)
+            if Excon.defaults[:headers].key? 'X-Request-ID'
+              @data[:headers]['X-Request-ID'] ||= Excon.defaults[:headers]['X-Request-ID']
+            end
+          end
+        end
+      end
     end
 
     class << self

@@ -3,6 +3,7 @@ PATH
   specs:
     vault-tools (0.5.16)
       aws-sdk
+      excon
       fernet (= 2.0.rc2)
       heroku-api
       honeybadger

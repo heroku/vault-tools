@@ -27,4 +27,5 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'rdoc'
   gem.add_dependency 'yard'
   gem.add_dependency 'aws-sdk'
+  gem.add_dependency 'excon'
 end
