@@ -47,7 +47,7 @@ module Vault
 
   def self.override_global_config
     $stderr.puts "Set Config to Vault::Config..." if ENV['DEBUG']
-    Object.send(:remove_const, :Config)
+    Object.send(:remove_const, :Config) if defined? Object::Config
     Object.const_set(:Config, Vault::Config)
   end
 
