@@ -22,6 +22,7 @@ class WebTest < Vault::TestCase
   # Always reload the web class to eliminate test leakage
   def setup
     super
+    Excon.defaults[:mock] = true
     set_env('APP_NAME', 'test-app')
     set_env('APP_DEPLOY', 'testing')
     reload_web!
@@ -29,6 +30,7 @@ class WebTest < Vault::TestCase
 
   def teardown
     super
+    Excon.stubs.clear
     @app = nil
   end
 
@@ -193,5 +195,39 @@ class WebTest < Vault::TestCase
     reload_web!
     get '/health'
     assert_equal(200, last_response.status)
+  end
+
+  def test_that_request_id_gets_logged
+    request_id = 'JKJK-123'
+    mock(Scrolls).log({
+      'request-id' => request_id,
+      'msg' => 'Hit logging test!',
+      'source' => 'testing',
+      'app' => 'test-app'
+    })
+    app.get '/logging-test' do
+      Vault::Log.log('msg' => 'Hit logging test!')
+    end
+
+    header 'X_REQUEST_ID', request_id
+    get '/logging-test'
+    assert_equal request_id, last_response.headers['Request-ID']
+  end
+
+  def test_that_excon_proxies_request_id
+    request_id = 'JKJK-123'
+    Excon.stub(
+      { method: :get, host: 'example.com', path: '/',
+        headers: {'X-Request-ID' => request_id}},
+      { body: request_id, status: 200 })
+    app.get '/proxy-test' do
+      conn = Excon.new('http://example.com/')
+      conn.get.body
+    end
+
+    header 'X_REQUEST_ID', request_id
+    get '/proxy-test'
+    assert_equal request_id, last_response.headers['Request-ID']
+    assert_equal request_id, last_response.body
   end
 end

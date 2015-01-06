@@ -59,6 +59,7 @@ module Vault
     def self.log(data, &block)
       data['source'] ||= Config.app_deploy if Config.app_deploy
       data['app'] ||= Config.app_name if Config.app_name
+      data['request-id'] = Thread.current[:request_id] if Thread.current[:request_id]
       Scrolls.log(data, &block)
     end
   end
