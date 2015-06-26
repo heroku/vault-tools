@@ -28,4 +28,5 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'yard'
   gem.add_dependency 'aws-sdk'
   gem.add_dependency 'excon'
+  gem.add_dependency 'rack', '~> 1.6.4'
 end
