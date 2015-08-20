@@ -3,6 +3,7 @@
 .bundle
 .config
 .yardoc
+.env*
 InstalledFiles
 _yardoc
 bin/*
