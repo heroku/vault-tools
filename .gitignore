@@ -6,7 +6,6 @@
 .env*
 InstalledFiles
 _yardoc
-bin/*
 coverage
 doc/
 lib/bundler/man
