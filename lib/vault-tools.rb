@@ -7,7 +7,7 @@ require 'heroku-api'
 require 'rollbar'
 
 Rollbar.configure do |config|
-  config.environment = ENV['RACK_ENV'] || ENV['RAILS_ENV'] || ENV['APP_ENV'] || ENV['ROLLBAR_ENV']
+  config.environment = ENV['RACK_ENV'] || ENV['RAILS_ENV'] || ENV['APP_ENV'] || ENV['ROLLBAR_ENV'] || 'unassigned'
   config.access_token = ENV['ROLLBAR_ACCESS_TOKEN']
 end
 
