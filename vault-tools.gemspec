@@ -26,7 +26,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'rollbar', '~> 2.1.2'
   gem.add_dependency 'rdoc'
   gem.add_dependency 'yard'
-  gem.add_dependency 'aws-sdk'
+  gem.add_dependency 'aws-sdk', '~> 1.0'
   gem.add_dependency 'excon'
   gem.add_dependency 'rack', '~> 1.6.4'
   gem.add_dependency 'coderay'
