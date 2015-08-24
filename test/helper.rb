@@ -10,32 +10,32 @@ module LoggedDataHelper
   end
 end
 
-# Overwrite the Honeybadger module
-module Honeybadger
+# Overwrite the Rollbar module
+module Rollbar
   # A place to store the exceptions
   def self.exceptions
     @exceptions ||= []
   end
 
   # Store calls to notify in an array instead
-  # of calling out to the Honeybadger service
+  # of calling out to the Rollbar service
   def self.notify(exception, opts = {})
     self.exceptions << [exception, opts]
   end
 end
 
-# Clear the stored exceptions in Honeybadger
+# Clear the stored exceptions in Rollbar
 # so each test starts w. a clean slate
-module HoneybadgerHelper
+module RollbarHelper
   def setup
     super
-    Honeybadger.exceptions.clear
+    Rollbar.exceptions.clear
   end
 end
 
 class Vault::TestCase
   include Vault::Test::EnvironmentHelpers
-  include HoneybadgerHelper
+  include RollbarHelper
 end
 
 module StubbedS3

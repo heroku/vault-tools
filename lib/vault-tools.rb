@@ -4,10 +4,11 @@ require 'sinatra/base'
 require 'scrolls'
 require 'rack/ssl-enforcer'
 require 'heroku-api'
-require 'honeybadger'
+require 'rollbar'
 
-Honeybadger.configure do |config|
-  config.api_key = ENV['HONEYBADGER_API_KEY']
+Rollbar.configure do |config|
+  config.environment = ENV['RACK_ENV'] || ENV['RAILS_ENV'] || ENV['APP_ENV'] || ENV['ROLLBAR_ENV'] || 'unassigned'
+  config.access_token = ENV['ROLLBAR_ACCESS_TOKEN']
 end
 
 # Yes, there's a lot of stuff on STDERR.  But its on
@@ -83,3 +84,4 @@ require 'vault-tools/text_processor'
 require 'vault-tools/time'
 require 'vault-tools/s3'
 require 'vault-tools/statement_store'
+require 'vault-tools/rollbar_helper'

@@ -157,12 +157,12 @@ class WebTest < Vault::TestCase
     assert_equal(500, last_response.status)
   end
 
-  # Test we register errors with Honeybadger when they happen
-  def test_error_with_honeybadger
-    assert_equal(0, Honeybadger.exceptions.size)
+  # Test we register errors with Rollbar when they happen
+  def test_error_with_rollbar
+    assert_equal(0, Rollbar.exceptions.size)
     get '/boom'
-    assert_equal(1, Honeybadger.exceptions.size)
-    error, opts = Honeybadger.exceptions.first
+    assert_equal(1, Rollbar.exceptions.size)
+    error, _ = Rollbar.exceptions.first
     assert_equal(RuntimeError, error.class)
   end
 

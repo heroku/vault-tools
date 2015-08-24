@@ -1,0 +1,32 @@
+#!/usr/bin/env ruby
+
+### Bundler ##
+require 'bundler/setup'
+require 'coderay'
+require 'pry'
+
+ENV["APP_ENV"] ||= "development"
+
+Bundler.require(ENV['APP_ENV'].downcase.gsub(" ","_").to_sym)
+
+require 'dotenv'
+Dotenv.load
+
+APP_ROOT=File.expand_path(File.dirname(__FILE__)) + "/.."
+
+require File.join(APP_ROOT,'/lib/vault-tools.rb')
+
+# add ability to reload console
+def reload!
+  reload_msg = '# Reloading the console...'
+  puts CodeRay.scan(reload_msg, :ruby).term
+  Pry.save_history
+  exec(File.expand_path(__FILE__), 'bin/console')
+end
+
+system('clear')
+welcome = <<eos
+# Welcome to Vault Tools Interactive Console
+eos
+puts CodeRay.scan(welcome, :ruby).term
+Pry.start
