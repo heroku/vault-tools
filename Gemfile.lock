@@ -26,10 +26,7 @@ GEM
     aws-sdk-v1 (1.60.2)
       json (~> 1.4)
       nokogiri (>= 1.4.4)
-    byebug (4.0.5)
-      columnize (= 0.9.0)
     coderay (1.1.0)
-    columnize (0.9.0)
     dotenv (2.0.0)
     excon (0.45.4)
     fernet (2.0.rc2)
@@ -53,9 +50,6 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
-    pry-byebug (3.1.0)
-      byebug (~> 4.0)
-      pry (~> 0.10)
     rack (1.6.4)
     rack-protection (1.5.3)
       rack
@@ -97,10 +91,8 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  byebug
   dotenv
   guard-minitest
-  pry-byebug
   rake
   shotgun
   vault-test-tools
