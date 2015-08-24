@@ -116,7 +116,7 @@ module Vault
     # body for easy debugging of errors.
     error do
       e = env['sinatra.error']
-      Honeybadger.notify(e, rack_env: env)
+      Rollbar.notify(e, rack_env: env)
       content = "#{e.class}: #{e.message}\n\n"
       content << e.backtrace.join("\n")
       [500, content]
