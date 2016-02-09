@@ -23,7 +23,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'rack-ssl-enforcer'
   gem.add_dependency 'heroku-api'
   gem.add_dependency 'fernet', '2.0.rc2'
-  gem.add_dependency 'rollbar', '~> 2.1.2'
+  gem.add_dependency 'rollbar', '~> 2.7.1'
   gem.add_dependency 'rdoc'
   gem.add_dependency 'yard'
   gem.add_dependency 'aws-sdk', '~> 1.0'
