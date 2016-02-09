@@ -9,7 +9,7 @@ require 'rollbar'
 Rollbar.configure do |config|
   config.environment = ENV['RACK_ENV'] || ENV['RAILS_ENV'] || ENV['APP_ENV'] || ENV['ROLLBAR_ENV'] || 'unassigned'
   config.access_token = ENV['ROLLBAR_ACCESS_TOKEN']
-  config.scrub_headers |= ["Authorization", "Cookie", "Set-Cookie", "X_CSRF_TOKEN", "X-CSRF-Token"]
+  config.scrub_headers |= ["Authorization", "Cookie", "Set-Cookie", "X_CSRF_TOKEN", "X-CSRF-Token", "HTTP_X_CSRF_TOKEN"]
   config.scrub_fields |= [:passwd, :password, :password_confirmation, :secret, :confirm_password,
                           :secret_token, :api_key, :access_token, :authenticity_token, :"bouncer.token", :"bouncer.refresh_token",
                           :heroku_oauth_token, :heroku_session_nonce, :heroku_users_session, :oauth_token, :postgres_session_nonce,
