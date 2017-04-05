@@ -87,6 +87,13 @@ module Vault
       # Check request for HTTP Basic creds and
       # password matches settings.basic_password
       def authorized?(passwords)
+        if passwords.empty?
+          if settings.basic_password.is_a?(String)
+            passwords << settings.basic_password
+          else
+            passwords = passwords + settings.basic_password
+          end
+        end
         passwords << settings.basic_password if passwords.empty?
         @auth ||= Rack::Auth::Basic::Request.new(request.env)
         @auth.provided? && @auth.basic? && @auth.credentials &&
