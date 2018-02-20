@@ -30,7 +30,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'excon'
   gem.add_dependency 'rack', '~> 1.6.4'
   gem.add_dependency 'coderay'
-  gem.add_dependency 'pry'
 
   gem.add_development_dependency 'dotenv'
+  gem.add_development_dependency 'pry'
 end
