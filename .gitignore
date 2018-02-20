@@ -18,3 +18,4 @@ tmp
 test.profile*
 test/.test.profile*
 vendor
+.tool-versions
