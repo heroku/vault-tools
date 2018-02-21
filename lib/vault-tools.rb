@@ -74,6 +74,7 @@ module Vault
     self.hack_time_class
     self.override_global_config
     self.load_shared_config
+    Tracing.configure
   end
 end
 
