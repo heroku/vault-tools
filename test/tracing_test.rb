@@ -1,5 +1,4 @@
 require 'helper'
-require 'pry'
 
 class TracingTest < Vault::TestCase
   # Anonymous Web Frontend
@@ -52,6 +51,13 @@ class TracingTest < Vault::TestCase
   end
 
   def test_excon
+    enable
+    Vault::Tracing.configure
+    assert Excon.defaults[:middlewares].include?(ZipkinTracer::ExconHandler),
+      "Vault::Tracing.setup_excon should add ZipkinTracer::ExconHandler to excon's middleware"
+  end
+
+  def test_sidekiq
     enable
     Vault::Tracing.configure
     assert Excon.defaults[:middlewares].include?(ZipkinTracer::ExconHandler),
