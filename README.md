@@ -99,7 +99,8 @@ The following are config vars to be set in the consumer app for tracing with
 Zipkin:
 * `APP_NAME` (required) what the trace will show up as in the Zipkin interface.
 * `ZIPKIN_ENABLED` (required) must be set to `true` to start tracing.
-* `ZIPKIN_API_HOST` defaults to our Zipkin staging; where to POST to.
+* `ZIPKIN_API_HOST` (required) defaults to our Zipkin staging but that's useless
+  with out the basic auth creds from the Tools team.
 * `ZIPKIN_SAMPLE_RATE` defaults to `0.1`.
 
 ## Releasing
