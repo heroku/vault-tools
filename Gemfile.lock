@@ -7,15 +7,12 @@ PATH
       excon
       fernet (= 2.0.rc2)
       heroku-api
-      pry
       rack (~> 1.6.4)
       rack-ssl-enforcer
-      rdoc
       rollbar (~> 2.7.1)
       scrolls
       sinatra (~> 1.4.4)
       uuidtools
-      yard
       zipkin-tracer (~> 0.27)
 
 GEM
@@ -107,11 +104,14 @@ PLATFORMS
 DEPENDENCIES
   dotenv
   guard-minitest
+  pry
   rake
+  rdoc
   shotgun
   vault-test-tools
   vault-tools!
+  yard
   yard-sinatra
 
 BUNDLED WITH
-   1.16.0
+   1.16.1
