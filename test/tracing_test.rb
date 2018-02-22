@@ -1,5 +1,4 @@
 require 'helper'
-require 'pry'
 
 class TracingTest < Vault::TestCase
   # Anonymous Web Frontend
