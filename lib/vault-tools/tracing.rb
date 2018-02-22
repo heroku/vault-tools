@@ -13,6 +13,7 @@ module Vault
 
       Vault::Web.instance_eval { require 'zipkin-tracer' }
       Vault::Web.use ZipkinTracer::RackHandler, config
+      setup_excon
     end
 
     # Configuration options for the Zipkin RackHandler.
@@ -36,5 +37,27 @@ module Vault
         Config[:zipkin_enabled] == 'true' &&
         Config[:zipkin_api_host]
     end
+
+    # Adds ZipkinTracer::ExconHandler to Excon's default middlewares if Excon is
+    # defined
+    #
+    # @return nil
+    def self.setup_excon
+      if add_to_excon_middlewares?
+        Excon.defaults[:middlewares].push(ZipkinTracer::ExconHandler)
+      end
+    end
+
+    # Checks to see if Excon is defined and if the Zipkin middleware has already
+    # been inserted.
+    #
+    # @private
+    #
+    # @return [true] if Excon is defined and the middleware is not already
+    # inserted
+    def self.add_to_excon_middlewares?
+      defined?(Excon) && !Excon.defaults[:middlewares].include?(ZipkinTracer::ExconHandler)
+    end
+    private_class_method :add_to_excon_middlewares?
   end
 end
