@@ -2,7 +2,7 @@ require 'uuidtools'
 
 module Vault
   module App
-    ID_CAPTURE = /^app(\d+)\@[\w\.]+com$/
+    ID_CAPTURE = /\Aapp(\d+)\@[\w\.]+com\z/
     # Convert a core app ID into a Heroku app ID.
     #
     # @param app_id [Fixnum] A core app ID.
