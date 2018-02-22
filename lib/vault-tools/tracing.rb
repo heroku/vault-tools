@@ -6,7 +6,7 @@ module Vault
       return unless Vault::Tracing.enabled?
 
       Vault::Web.instance_eval { require 'zipkin-tracer' }
-      Vault::Web.use ZipkinTracer::RackHandler, Vault::Tracing.config
+      Vault::Web.use ZipkinTracer::RackHandler, config
     end
 
     def self.config
