@@ -2,6 +2,12 @@ module Vault
   module Tracing
     ZIPKIN_API_HOST_STAGING = 'https://zipkin-staging.heroku.tools'.freeze
 
+    # Injects the zipkin middleware into the Web class.
+    #
+    # @example
+    #   Vault::Tracing.configure
+    #
+    # @return nil
     def self.configure
       return unless Vault::Tracing.enabled?
 
@@ -9,6 +15,9 @@ module Vault
       Vault::Web.use ZipkinTracer::RackHandler, config
     end
 
+    # Configuration options for the Zipkin RackHandler.
+    #
+    # @return [Hash] config options for Zipkin tracer
     def self.config
       {
         service_name: Config[:app_name],
@@ -19,6 +28,9 @@ module Vault
       }
     end
 
+    # A helper to guard against injecting Zipkin when not desired.
+    #
+    # @return [true] if so
     def self.enabled?
       Config[:app_name] && Config[:zipkin_enabled] == 'true'
     end

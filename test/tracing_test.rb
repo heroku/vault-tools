@@ -31,6 +31,10 @@ class TracingTest < Vault::TestCase
     set_env('ZIPKIN_ENABLED', 'true')
   end
 
+  def disable
+    set_env('ZIPKIN_ENABLED', nil)
+  end
+
   def test_configure_enabled
     enable
     Vault::Tracing.configure
@@ -40,6 +44,7 @@ class TracingTest < Vault::TestCase
   end
 
   def test_configure_not_enabled
+    disable
     refute Vault::Tracing.configure,
       'Vault::Tracing.configure should return nil when not enabled'
   end
@@ -51,6 +56,7 @@ class TracingTest < Vault::TestCase
   end
 
   def test_enabled_false
+    disable
     refute Vault::Tracing.enabled?,
       'Vault::Tracing.enabled? should return false when not enabled'
   end
