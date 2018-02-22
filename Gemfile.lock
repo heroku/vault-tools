@@ -9,12 +9,10 @@ PATH
       heroku-api
       rack (~> 1.6.4)
       rack-ssl-enforcer
-      rdoc
       rollbar (~> 2.7.1)
       scrolls
       sinatra (~> 1.4.4)
       uuidtools
-      yard
 
 GEM
   remote: https://rubygems.org/
@@ -95,9 +93,11 @@ DEPENDENCIES
   guard-minitest
   pry
   rake
+  rdoc
   shotgun
   vault-test-tools
   vault-tools!
+  yard
   yard-sinatra
 
 BUNDLED WITH
