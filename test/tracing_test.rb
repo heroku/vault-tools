@@ -28,7 +28,7 @@ class TracingTest < Vault::TestCase
   end
 
   def enable
-    set_env('ZIPKIN_API_HOST', 'https://test-zipin.heroku.tools')
+    set_env('APP_NAME', 'test_app')
     set_env('ZIPKIN_ENABLED', 'true')
   end
 

@@ -20,7 +20,7 @@ module Vault
     end
 
     def self.enabled?
-      Config[:zipkin_api_host] && Config[:zipkin_enabled] == 'true'
+      Config[:app_name] && Config[:zipkin_enabled] == 'true'
     end
   end
 end
