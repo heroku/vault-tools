@@ -19,6 +19,7 @@ class TracingTest < Vault::TestCase
   def setup
     super
     reload_web!
+    enable
   end
 
   def teardown
@@ -29,6 +30,7 @@ class TracingTest < Vault::TestCase
   def enable
     set_env('APP_NAME', 'test_app')
     set_env('ZIPKIN_ENABLED', 'true')
+    set_env('ZIPKIN_API_HOST', 'http://localhost')
   end
 
   def disable
@@ -36,7 +38,6 @@ class TracingTest < Vault::TestCase
   end
 
   def test_configure_enabled
-    enable
     Vault::Tracing.configure
     middleware_constants = app.middleware.map(&:first)
     assert middleware_constants.include?(ZipkinTracer::RackHandler),
@@ -50,7 +51,6 @@ class TracingTest < Vault::TestCase
   end
 
   def test_enabled_true
-    enable
     assert Vault::Tracing.enabled?,
       'Vault::Tracing.enabled? should return true when enabled'
   end

@@ -22,7 +22,7 @@ module Vault
       {
         service_name: Config.app_name,
         service_port: 443,
-        json_api_host: (Config[:zipkin_api_host] || ZIPKIN_API_HOST_STAGING),
+        json_api_host: Config[:zipkin_api_host],
         sample_rate: (Config[:zipkin_sample_rate] || 0.1).to_f,
         sampled_as_boolean: false
       }
@@ -32,7 +32,9 @@ module Vault
     #
     # @return [true] if so
     def self.enabled?
-      Config.app_name && Config[:zipkin_enabled] == 'true'
+      Config.app_name &&
+        Config[:zipkin_enabled] == 'true' &&
+        Config[:zipkin_api_host]
     end
   end
 end
