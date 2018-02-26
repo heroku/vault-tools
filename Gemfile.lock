@@ -89,7 +89,7 @@ GEM
       rr
       scrolls
       turn
-    yard (0.8.7.6)
+    yard (0.9.12)
     yard-sinatra (1.0.0)
       yard (~> 0.7)
     zipkin-tracer (0.27.2.1)
