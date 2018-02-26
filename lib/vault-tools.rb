@@ -74,6 +74,7 @@ module Vault
     self.hack_time_class
     self.override_global_config
     self.load_shared_config
+    Tracing.configure
   end
 end
 
@@ -91,3 +92,4 @@ require 'vault-tools/time'
 require 'vault-tools/s3'
 require 'vault-tools/statement_store'
 require 'vault-tools/rollbar_helper'
+require 'vault-tools/tracing'
