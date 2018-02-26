@@ -66,6 +66,14 @@ module Vault
     end
   end
 
+  def self.init_scrolls
+    # Scrolls 0.9.0+ requires an init
+    Scrolls.init(
+      global_context: {app: Vault::Config.app_name},
+      time_unit: 'milliseconds'
+    )
+  end
+
   # all in one go
   def self.setup
     self.require
@@ -74,6 +82,7 @@ module Vault
     self.hack_time_class
     self.override_global_config
     self.load_shared_config
+    self.init_scrolls
     Tracing.configure
   end
 end
