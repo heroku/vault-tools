@@ -58,12 +58,12 @@ module Vault
     # @private
     #
     # @return nil
-    def self.setup_sidekiq
-      return unless defined?(Sidekiq)
-      Sidekiq.configure_server do |config|
+    def self.setup_sidekiq(sidekiq = Sidekiq)
+      return unless defined?(sidekiq)
+      sidekiq.configure_server do |config|
         config.server_middleware do |chain|
           chain.add ZipkinTracer::Sidekiq::Middleware,
-            config.merge(traceable_workers: [:all])
+            Vault::Tracing.config.merge(traceable_workers: [:all])
         end
       end
     end
