@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    vault-tools (0.6.0)
+    vault-tools (0.6.1)
       aws-sdk (~> 1.0)
       coderay
       excon
@@ -10,7 +10,7 @@ PATH
       rack (~> 1.6.4)
       rack-ssl-enforcer
       rollbar (~> 2.7.1)
-      scrolls
+      scrolls (~> 0.9)
       sinatra (~> 1.4.4)
       uuidtools
       zipkin-tracer (~> 0.27)
@@ -64,7 +64,7 @@ GEM
     rollbar (2.7.1)
       multi_json
     rr (1.1.2)
-    scrolls (0.3.8)
+    scrolls (0.9.0)
     shotgun (0.9.1)
       rack (>= 1.0)
     sinatra (1.4.8)

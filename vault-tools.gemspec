@@ -17,7 +17,7 @@ Gem::Specification.new do |gem|
   gem.test_files    = gem.files.grep('^(test|spec|features)/')
   gem.require_paths = ["lib"]
 
-  gem.add_dependency 'scrolls'
+  gem.add_dependency 'scrolls', '~> 0.9'
   gem.add_dependency 'sinatra', '~> 1.4.4'
   gem.add_dependency 'uuidtools'
   gem.add_dependency 'rack-ssl-enforcer'
