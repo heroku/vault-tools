@@ -28,13 +28,9 @@ module Vault
 
       private
 
-      def sample?
-        rand < @config.sample_rate
-      end
-
       def trace_id(job)
         info = job["zipkin_trace_information"]
-        if info && propagate_traces?
+        if info
           trace_id = info["trace_id"]
           span_id  = info["span_id"]
           parent_span_id = info["parent_id"]
@@ -49,8 +45,8 @@ module Vault
         ::Trace::TraceId.new(trace_id, parent_span_id, span_id, sampled, flags)
       end
 
-      def propagate_traces?
-        ENV.fetch("ZIPKIN_SIDEKIQ_PROPAGATION", "true") == "true"
+      def sample?
+        rand < @config.sample_rate
       end
     end
   end

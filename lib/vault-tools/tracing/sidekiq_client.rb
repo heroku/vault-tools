@@ -12,7 +12,7 @@ module Vault
         }
       end
 
-      def call(worker_class, job, _queue, _redis_pool)
+      def call(worker_class, job, _queue)
         trace_id = ::ZipkinTracer::TraceGenerator.new.next_trace_id
         ::ZipkinTracer::TraceContainer.with_trace_id(trace_id) do
           job["zipkin_trace_information"] = trace_information(trace_id)
