@@ -20,7 +20,7 @@ module Vault
     # @return [Hash] config options for Zipkin tracer
     def self.config
       {
-        service_name: Config.app_name,
+        service_name: "#{Config.app_name}.herokuapp.com",
         service_port: 443,
         json_api_host: Config[:zipkin_api_host],
         sample_rate: (Config[:zipkin_sample_rate] || 0.1).to_f,
