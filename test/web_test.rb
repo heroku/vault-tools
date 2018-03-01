@@ -70,6 +70,17 @@ class WebTest < Vault::TestCase
     assert_equal 'You may pass', last_response.body
   end
 
+  def test_http_basic_auth_nil
+    app.set :basic_password, nil
+    app.get '/protected' do
+      protected!
+      'You may pass'
+    end
+
+    get '/protected'
+    assert_equal 401, last_response.status
+  end
+
   def test_http_basic_auth_with_alternate_password
     app.set :basic_password, 'password'
     app.get '/protected' do
