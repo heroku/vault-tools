@@ -1,6 +1,7 @@
 module Vault
   module Tracing
     # Tracing info for sidekiq
+    # This was lifted straight out of heroku/coal_car
     class SidekiqServer
       def initialize(config = nil)
         @config = ZipkinTracer::Config.new(nil, config).freeze

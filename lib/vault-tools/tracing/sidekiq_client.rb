@@ -1,6 +1,7 @@
 module Vault
   module Tracing
     # Tracing info for sidekiq, adding them as params
+    # This was lifted straight out of heroku/coal_car
     class SidekiqClient
       def trace_information(trace_id)
         {
