@@ -1,3 +1,5 @@
+require 'zipkin-tracer'
+
 module Vault
   module Tracing
     ZIPKIN_API_HOST_STAGING = 'https://zipkin-staging.heroku.tools'.freeze
@@ -16,6 +18,29 @@ module Vault
       Vault::Web.use ZipkinTracer::RackHandler, config
       setup_excon
       setup_sidekiq
+    end
+
+    # Traces a local component. Useful to track down long running implementation
+    # methods within an app, instead of only tracing external calls.
+    #
+    # @param name [String] the name of the span to record in Zipkin.
+    # @param tracer [Constant] the const that should respond to :local_component_span
+    # @param options [Hash] the options to create a message with.
+    #
+    # @example
+    #   Vault::Tracing.trace_local 'cashier_middleware_x', internal: true do
+    #     # some expensive task
+    #   end
+    #
+    # @yield [the_block_passed_in]
+    def self.trace_local(name, tracer = ZipkinTracer::TraceClient, **options)
+      return yield unless Vault::Tracing.enabled?
+
+      tracer.local_component_span(name) do |span|
+        span.name = name
+        span.record_tag('options', options.to_s) unless options.empty?
+        yield
+      end
     end
 
     # Configuration options for the Zipkin RackHandler.

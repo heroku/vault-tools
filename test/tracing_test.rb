@@ -65,7 +65,7 @@ class TracingTest < Vault::TestCase
     sidekiq_mock.expect :configure_client, true
     Vault::Tracing.setup_sidekiq(sidekiq_mock)
     assert sidekiq_mock.verify,
-      "Vault::Tracing.setup_sidekiq should call ::configure_server, and ::configure_client on Sidekiq"
+      'Vault::Tracing.setup_sidekiq should call ::configure_server, and ::configure_client on Sidekiq'
   end
 
   def test_enabled_true
@@ -77,5 +77,18 @@ class TracingTest < Vault::TestCase
     disable
     refute Vault::Tracing.enabled?,
       'Vault::Tracing.enabled? should return false when not enabled'
+  end
+
+  def test_trace_local_yield
+    result = Vault::Tracing.trace_local('testing', opt: 'foo') { 1 + 1 }
+    assert_equal 2, result, 'trace_local should yield the result of the block given'
+  end
+
+  def test_trace_local_calls_tracer
+    tracer_mock = Minitest::Mock.new
+    tracer_mock.expect :local_component_span, true, ['testing']
+    Vault::Tracing.trace_local('testing', tracer_mock, opt: 'foo') { 1 + 1 }
+    assert tracer_mock.verify,
+      'trace_local should call :local_component_span on the tracer'
   end
 end
