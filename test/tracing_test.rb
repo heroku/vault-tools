@@ -38,6 +38,10 @@ class TracingTest < Vault::TestCase
     set_env('ZIPKIN_ENABLED', nil)
   end
 
+  def test_service_name_gets_herokuapp
+    assert_equal 'test_app.herokuapp.com', Vault::Tracing.config[:service_name]
+  end
+
   def test_configure_enabled
     Vault::Tracing.configure
     middleware_constants = app.middleware.map(&:first)
