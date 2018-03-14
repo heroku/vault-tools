@@ -26,6 +26,7 @@ GEM
       nokogiri (~> 1)
     coderay (1.1.2)
     concurrent-ruby (1.0.5)
+    connection_pool (2.2.1)
     dotenv (2.0.0)
     excon (0.60.0)
     faraday (0.14.0)
@@ -61,12 +62,18 @@ GEM
       rack (>= 1.0)
     rake (10.4.2)
     rdoc (6.0.1)
+    redis (4.0.1)
     rollbar (2.7.1)
       multi_json
     rr (1.1.2)
     scrolls (0.9.0)
     shotgun (0.9.1)
       rack (>= 1.0)
+    sidekiq (5.1.1)
+      concurrent-ruby (~> 1.0)
+      connection_pool (~> 2.2, >= 2.2.0)
+      rack-protection (>= 1.5.0)
+      redis (>= 3.3.5, < 5)
     sinatra (1.4.8)
       rack (~> 1.5)
       rack-protection (~> 1.4)
@@ -108,6 +115,7 @@ DEPENDENCIES
   rake
   rdoc
   shotgun
+  sidekiq
   vault-test-tools
   vault-tools!
   yard

@@ -1,4 +1,5 @@
 require 'helper'
+require 'sidekiq'
 
 class TracingTest < Vault::TestCase
   # Anonymous Web Frontend
@@ -54,6 +55,23 @@ class TracingTest < Vault::TestCase
       'Vault::Tracing.configure should return nil when not enabled'
   end
 
+  def test_excon
+    enable
+    Vault::Tracing.configure
+    assert Excon.defaults[:middlewares].include?(ZipkinTracer::ExconHandler),
+      "Vault::Tracing.setup_excon should add ZipkinTracer::ExconHandler to excon's middleware"
+  end
+
+  def test_sidekiq
+    enable
+    sidekiq_mock = Minitest::Mock.new
+    sidekiq_mock.expect :configure_server, true
+    sidekiq_mock.expect :configure_client, true
+    Vault::Tracing.setup_sidekiq(sidekiq_mock)
+    assert sidekiq_mock.verify,
+      'Vault::Tracing.setup_sidekiq should call ::configure_server, and ::configure_client on Sidekiq'
+  end
+
   def test_enabled_true
     assert Vault::Tracing.enabled?,
       'Vault::Tracing.enabled? should return true when enabled'
@@ -63,5 +81,18 @@ class TracingTest < Vault::TestCase
     disable
     refute Vault::Tracing.enabled?,
       'Vault::Tracing.enabled? should return false when not enabled'
+  end
+
+  def test_trace_local_yield
+    result = Vault::Tracing.trace_local('testing', opt: 'foo') { 1 + 1 }
+    assert_equal 2, result, 'trace_local should yield the result of the block given'
+  end
+
+  def test_trace_local_calls_tracer
+    tracer_mock = Minitest::Mock.new
+    tracer_mock.expect :local_component_span, true, ['testing']
+    Vault::Tracing.trace_local('testing', tracer_mock, opt: 'foo') { 1 + 1 }
+    assert tracer_mock.verify,
+      'trace_local should call :local_component_span on the tracer'
   end
 end
