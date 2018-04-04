@@ -17,7 +17,7 @@ module Vault
         trace_id = ::ZipkinTracer::TraceGenerator.new.next_trace_id
         ::ZipkinTracer::TraceContainer.with_trace_id(trace_id) do
           job["zipkin_trace_information"] = trace_information(trace_id)
-          if trace_id.sampled?
+          if trace_id.sampled? && ::Trace.tracer
             ::Trace.tracer.with_new_span(trace_id, "sidekiq") do |span|
               local_endpoint = Trace.default_endpoint
               klass = job["wrapped".freeze] || worker_class
