@@ -66,10 +66,9 @@ class TracingTest < Vault::TestCase
     enable
     sidekiq_mock = Minitest::Mock.new
     sidekiq_mock.expect :configure_server, true
-    sidekiq_mock.expect :configure_client, true
-    Vault::Tracing.setup_sidekiq(sidekiq_mock)
+    Vault::Tracing.send(:setup_sidekiq, sidekiq_mock)
     assert sidekiq_mock.verify,
-      'Vault::Tracing.setup_sidekiq should call ::configure_server, and ::configure_client on Sidekiq'
+      'Vault::Tracing.setup_sidekiq should call ::configure_server on Sidekiq'
   end
 
   def test_enabled_true
