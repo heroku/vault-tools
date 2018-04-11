@@ -48,7 +48,7 @@ module Vault
       {
         service_name: "#{Config.app_name}.herokuapp.com",
         service_port: 443,
-        json_api_host: Config[:zipkin_api_host],
+        log_tracing: true,
         sample_rate: (Config[:zipkin_sample_rate] || 0.1).to_f,
         sampled_as_boolean: false
       }
