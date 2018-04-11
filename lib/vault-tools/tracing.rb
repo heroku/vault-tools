@@ -76,7 +76,7 @@ module Vault
     end
     private_class_method :setup_excon
 
-    # Adds our SidekiqClient and SidekiqServer middlware to Sidekiq
+    # Adds Zipkin middleware to Sidekiq
     #
     # @private
     #
@@ -92,7 +92,7 @@ module Vault
         end
       end
     end
-    private_class_method :setup_excon
+    private_class_method :setup_sidekiq
 
     # Checks to see if Excon is defined and if the Zipkin middleware has already
     # been inserted.
