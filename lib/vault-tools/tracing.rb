@@ -5,7 +5,7 @@ module Vault
     ZIPKIN_API_HOST_STAGING = 'https://zipkin-staging.heroku.tools'.freeze
 
     # Injects the zipkin middleware into the Web class, add Zipkin middleware to
-    # Excon, and adds Zipkin middleware to Sidekiq.
+    # Excon.
     #
     # @example
     #   Vault::Tracing.configure
@@ -17,7 +17,6 @@ module Vault
       Vault::Web.instance_eval { require 'zipkin-tracer' }
       Vault::Web.use ZipkinTracer::RackHandler, config
       setup_excon
-      setup_sidekiq
     end
 
     # Traces a local component. Useful to track down long running implementation
@@ -74,30 +73,6 @@ module Vault
     def self.setup_excon
       if add_to_excon_middlewares?
         Excon.defaults[:middlewares].push(ZipkinTracer::ExconHandler)
-      end
-    end
-    private_class_method :setup_excon
-
-    # Adds our SidekiqClient and SidekiqServer middlware to Sidekiq
-    #
-    # @private
-    #
-    # @return nil
-    def self.setup_sidekiq(sidekiq = Sidekiq)
-      return unless defined?(sidekiq)
-      sidekiq.configure_client do |config|
-        config.client_middleware do |chain|
-          chain.add Vault::Tracing::SidekiqClient
-        end
-      end
-
-      sidekiq.configure_server do |config|
-        config.client_middleware do |chain|
-          chain.add Vault::Tracing::SidekiqClient
-        end
-        config.server_middleware do |chain|
-          chain.add Vault::Tracing::SidekiqServer, Vault::Tracing.config
-        end
       end
     end
     private_class_method :setup_excon

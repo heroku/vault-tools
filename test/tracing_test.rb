@@ -1,5 +1,4 @@
 require 'helper'
-require 'sidekiq'
 
 class TracingTest < Vault::TestCase
   # Anonymous Web Frontend
@@ -56,20 +55,9 @@ class TracingTest < Vault::TestCase
   end
 
   def test_excon
-    enable
     Vault::Tracing.configure
     assert Excon.defaults[:middlewares].include?(ZipkinTracer::ExconHandler),
       "Vault::Tracing.setup_excon should add ZipkinTracer::ExconHandler to excon's middleware"
-  end
-
-  def test_sidekiq
-    enable
-    sidekiq_mock = Minitest::Mock.new
-    sidekiq_mock.expect :configure_server, true
-    sidekiq_mock.expect :configure_client, true
-    Vault::Tracing.setup_sidekiq(sidekiq_mock)
-    assert sidekiq_mock.verify,
-      'Vault::Tracing.setup_sidekiq should call ::configure_server, and ::configure_client on Sidekiq'
   end
 
   def test_enabled_true
