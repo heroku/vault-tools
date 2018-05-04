@@ -219,4 +219,19 @@ class ConfigTest < Vault::TestCase
     set_env 'SIDEKIQ_CONCURRENCY', '10'
     assert_equal(10, Config.sidekiq_concurrency)
   end
+
+  # Confg.fetch(:some_var, 'whatever') will fallback to 'whatever' if SOME_VAR
+  # is not defined.
+  def test_fetch_allows_fallback_value
+    assert_equal('bar', Config.fetch(:some_var, 'bar'))
+    set_env 'SOME_VAR', 'foo'
+    assert_equal('foo', Config.fetch(:some_var, 'bar'))
+  end
+
+  # Confg.fetch(:some_var, 'whatever') will allow SOME_VAR to be false
+  def test_fetch_allows_value_to_be_false
+    assert_equal('bar', Config.fetch(:some_var, 'bar'))
+    set_env 'SOME_VAR', 'false'
+    assert_equal('false', Config.fetch(:some_var, 'bar'))
+  end
 end
