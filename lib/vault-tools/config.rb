@@ -199,5 +199,15 @@ module Vault
     def self.sidekiq_concurrency
       int('SIDEKIQ_CONCURRENCY') || 25
     end
+
+    # Return a fallback value if a given Config var is not set
+    #
+    # @param name [String] The name of the environment variable.
+    # @param fallback [String] The value to return if there is no value for the
+    # name param.
+    # @return [String] Either the set Config var value or the fallback value
+    def self.fetch(name, fallback)
+      self[name].nil? ? fallback : self[name]
+    end
   end
 end
