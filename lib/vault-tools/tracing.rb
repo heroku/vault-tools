@@ -14,14 +14,31 @@ module Vault
     # @return nil
     def self.configure
       return unless Vault::Tracing.enabled?
+      Vault::Log.log(message: 'configure.called!')
 
       Vault::Web.instance_eval { require 'zipkin-tracer' }
       Vault::Web.use ZipkinTracer::RackHandler, config
       setup_excon
-      ::Sidekiq.configure_server do |config|
+      setup_sidekiq
+    end
+
+    def self.setup_sidekiq(sidekiq = Sidekiq)
+      return unless defined?(sidekiq)
+      Vault::Log.log(message: 'setup_sidekiq.called')
+      $stderr.puts 'does this work?'
+
+      sidekiq.configure_client do |config|
+        config.client_middleware do |chain|
+          chain.add Vault::Tracing::SidekiqClient
+        end
+      end
+
+      sidekiq.configure_server do |config|
+        config.client_middleware do |chain|
+          chain.add Vault::Tracing::SidekiqClient
+        end
         config.server_middleware do |chain|
-          Vault::Log.log(message: 'starting_sidekiq_zipkin')
-          chain.add ZipkinTracer::Sidekiq::Middleware, config.merge(traceable_workers: [:all])
+          chain.add Vault::Tracing::SidekiqServer, Vault::Tracing.config
         end
       end
     end

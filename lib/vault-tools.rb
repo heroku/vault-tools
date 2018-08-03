@@ -28,6 +28,7 @@ module Vault
   def self.require
     Kernel.require 'bundler'
     $stderr.puts "Loading #{ENV['RACK_ENV']} environment..."
+    Vault::Log.log mesage: 'does this work??'
     Bundler.require :default, ENV['RACK_ENV'].to_sym
   end
 
