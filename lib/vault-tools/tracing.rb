@@ -1,4 +1,5 @@
 require 'zipkin-tracer'
+require 'sidekiq'
 
 module Vault
   module Tracing
@@ -17,6 +18,12 @@ module Vault
       Vault::Web.instance_eval { require 'zipkin-tracer' }
       Vault::Web.use ZipkinTracer::RackHandler, config
       setup_excon
+      ::Sidekiq.configure_server do |config|
+        config.server_middleware do |chain|
+          Vault::Log.log(message: 'starting_sidekiq_zipkin')
+          chain.add ZipkinTracer::Sidekiq::Middleware, config.merge(traceable_workers: [:all])
+        end
+      end
     end
 
     # Traces a local component. Useful to track down long running implementation
