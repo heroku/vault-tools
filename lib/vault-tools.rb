@@ -6,20 +6,6 @@ require 'rack/ssl-enforcer'
 require 'heroku-api'
 require 'rollbar'
 
-Rollbar.configure do |config|
-  config.environment = ENV['RACK_ENV'] || ENV['RAILS_ENV'] || ENV['APP_ENV'] || ENV['ROLLBAR_ENV'] || 'unassigned'
-  config.access_token = ENV['ROLLBAR_ACCESS_TOKEN']
-  config.scrub_headers = (config.scrub_headers || []) | ["Authorization", "Cookie", "Set-Cookie", "X_CSRF_TOKEN", "X-CSRF-Token", "HTTP_X_CSRF_TOKEN"]
-  config.scrub_fields = (config.scrub_fields || []) | [:passwd, :password, :password_confirmation, :secret, :confirm_password,
-                          :secret_token, :api_key, :access_token, :authenticity_token, :"bouncer.token", :"bouncer.refresh_token",
-                          :heroku_oauth_token, :heroku_session_nonce, :heroku_users_session, :oauth_token, :postgres_session_nonce,
-                          :"request.cookies.signup-sso-session", :sudo_oauth_token, :super_user_session_secret, :user_session_secret,
-                          :"wwo-sso-session"]
-
-
-  config.enabled = Vault::Config.production?
-end
-
 # Yes, there's a lot of stuff on STDERR.  But its on
 # stderr and not stdout so you can pipe to /dev/null if
 # you hate it.  These methods do some pretty heavy-handed
@@ -107,3 +93,17 @@ require 'vault-tools/rollbar_helper'
 require 'vault-tools/tracing/sidekiq_client'
 require 'vault-tools/tracing/sidekiq_server'
 require 'vault-tools/tracing'
+
+Rollbar.configure do |config|
+  config.environment = ENV['RACK_ENV'] || ENV['RAILS_ENV'] || ENV['APP_ENV'] || ENV['ROLLBAR_ENV'] || 'unassigned'
+  config.access_token = ENV['ROLLBAR_ACCESS_TOKEN']
+  config.scrub_headers = (config.scrub_headers || []) | ["Authorization", "Cookie", "Set-Cookie", "X_CSRF_TOKEN", "X-CSRF-Token", "HTTP_X_CSRF_TOKEN"]
+  config.scrub_fields = (config.scrub_fields || []) | [:passwd, :password, :password_confirmation, :secret, :confirm_password,
+                          :secret_token, :api_key, :access_token, :authenticity_token, :"bouncer.token", :"bouncer.refresh_token",
+                          :heroku_oauth_token, :heroku_session_nonce, :heroku_users_session, :oauth_token, :postgres_session_nonce,
+                          :"request.cookies.signup-sso-session", :sudo_oauth_token, :super_user_session_secret, :user_session_secret,
+                          :"wwo-sso-session"]
+
+
+  config.enabled = Vault::Config.production?
+end
