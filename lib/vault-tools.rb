@@ -15,6 +15,9 @@ Rollbar.configure do |config|
                           :heroku_oauth_token, :heroku_session_nonce, :heroku_users_session, :oauth_token, :postgres_session_nonce,
                           :"request.cookies.signup-sso-session", :sudo_oauth_token, :super_user_session_secret, :user_session_secret,
                           :"wwo-sso-session"]
+
+
+  config.enabled = Vault::Config.production?
 end
 
 # Yes, there's a lot of stuff on STDERR.  But its on
