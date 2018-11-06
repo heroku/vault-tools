@@ -18,7 +18,7 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
 
   gem.add_dependency 'scrolls', '~> 0.9'
-  gem.add_dependency 'sinatra', '~> 1.4.4'
+  gem.add_dependency 'sinatra', '~> 2.0.4'
   gem.add_dependency 'uuidtools'
   gem.add_dependency 'rack-ssl-enforcer'
   gem.add_dependency 'heroku-api'
@@ -26,7 +26,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'rollbar', '~> 2.7.1'
   gem.add_dependency 'aws-sdk', '~> 1.0'
   gem.add_dependency 'excon'
-  gem.add_dependency 'rack', '~> 1.6.4'
+  gem.add_dependency 'rack', '~> 2.0'
   gem.add_dependency 'coderay'
   gem.add_dependency 'zipkin-tracer', '~> 0.27'
 
