@@ -114,14 +114,14 @@ class ConfigTest < Vault::TestCase
   # variable.
   def test_app_name
     set_env 'APP_NAME', "my-app"
-    Config.app_name.must_equal 'my-app'
+    assert_equal(Config.app_name, 'my-app')
   end
 
   # Config.app_deploy returns the value of the APP_DEPLOY environment
   # variable.
   def test_app_deploy
     set_env 'APP_DEPLOY', "test"
-    Config.app_deploy.must_equal 'test'
+    assert_equal(Config.app_deploy, 'test')
   end
 
   # Config.port raises a RuntimeError if no `PORT` environment variable
