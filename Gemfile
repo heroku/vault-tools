@@ -12,6 +12,5 @@ end
 group :test do
   gem 'guard-minitest'
   gem 'minitest-around'
-  # gem 'vault-test-tools', '~> 1.0.0'
-  gem 'vault-test-tools', path: '../vault-test-tools'
+  gem 'vault-test-tools', '~> 1.0.0'
 end
