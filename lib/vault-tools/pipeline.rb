@@ -20,7 +20,7 @@ module Vault
     end
 
     def self.filters
-      @filters
+      @filters ||= nil
     end
 
     def self.process(thing)

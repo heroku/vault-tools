@@ -26,9 +26,6 @@ calling `Vault.setup` will:
 - if the `CONFIG_APP` environment variable is defined and this is
   the production environment, it will attempt to use the Heroku API
   to load the config vars from another app into `Vault::Config`
-- enable distributed tracing via Zipkin, if the [required config
-  vars](#configs-for-tracing) are set
-
 
 ### `Vault::Config`
 
@@ -92,16 +89,6 @@ Run the tests:
 Generate the API documentation:
 
     vendor/bin/d
-
-## Configs for tracing
-
-The following are config vars to be set in the consumer app for tracing with
-Zipkin:
-* `APP_NAME` (required) what the trace will show up as in the Zipkin interface.
-* `ZIPKIN_ENABLED` (required) must be set to `true` to start tracing.
-* `ZIPKIN_API_HOST` (required) where to post traces to. URL must contain the
-  basic auth creds from the Tools team.
-* `ZIPKIN_SAMPLE_RATE` defaults to `0.1`.
 
 ## Releasing
 

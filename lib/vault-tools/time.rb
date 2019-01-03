@@ -16,7 +16,7 @@ class Time
   end
 end
 
-class Fixnum
+class Integer
   def weeks
     self.days * 7
   end

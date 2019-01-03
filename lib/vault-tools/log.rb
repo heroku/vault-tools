@@ -19,7 +19,7 @@ module Vault
     # This makes it possible to easily measure individual HTTP status codes as
     # well as classes of HTTP status codes.
     #
-    # @param status [Fixnum] The HTTP status code to record.
+    # @param status [Integer] The HTTP status code to record.
     def self.count_status(status)
       count("http.#{status}")
       if status_prefix = status.to_s.match(/\d/)[0]
@@ -39,7 +39,7 @@ module Vault
     # Log a timing metric.
     #
     # @param name [String] A Sinatra-formatted route URL.
-    # @param duration [Fixnum] The duration to record, in milliseconds.
+    # @param duration [Integer] The duration to record, in milliseconds.
     def self.time(name, duration)
       if name
         name.gsub(/\/:\w+/, '').            # Remove param names from path.

@@ -1,12 +1,12 @@
 require 'helper'
 
 class StatementStoreTest < Vault::TestCase
-  def setup
-    super
-    StubbedS3.enable!(self)
-    StubbedS3.seed('vault-v2-json-invoice-test',
-                   '2014-10-01/2014-11-01/user8@heroku.com_v2', '{"foo": 1}')
-
+  def around(&block)
+    StubbedS3.enable! do
+      StubbedS3.seed('vault-v2-json-invoice-test',
+                     '2014-10-01/2014-11-01/user8@heroku.com_v2', '{"foo": 1}')
+      yield
+    end
   end
 
   def test_invoice_path_with_user_id
@@ -36,8 +36,7 @@ class StatementStoreTest < Vault::TestCase
     # Nothing Before Write
     doc = inv.get_json(start_time: '2014-10-01', stop_time: '2014-11-01',
                        user_hid: 'user9@heroku.com', version: 2)
-    expected = nil
-    assert_equal expected, doc
+    assert_nil doc
 
     # Write to S3 updating expectation
     expected = {"bar" => 3}

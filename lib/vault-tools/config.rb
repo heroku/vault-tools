@@ -32,28 +32,10 @@ module Vault
       ENV[var_name] || @@shared[var_name] || @@defaults[default_name]
     end
 
-    # Loads config from another app.
-    def self.load_shared!(app = nil)
-      heroku   = Heroku::API.new
-      @@shared = heroku.get_config_vars(app).body
-    end
-
     # Reset defaults and shared values
     def self.reset!
       @@defaults = {}
       @@shared   = {}
-    end
-
-    # An environment variable from another app.
-    #
-    # @param app [String] The name of the app to get the value from.
-    # @param name [String] The name of the environment variable to fetch a
-    #   value for.
-    # @return [String] The value of an environment variable from another
-    #   Heroku app or nil if no match is available.
-    def self.remote_env(app, name)
-      heroku = Heroku::API.new
-      heroku.get_config_vars(app).body[name]
     end
 
     # An environment variable.
@@ -126,7 +108,7 @@ module Vault
 
     # The port to listen on for web requests.
     #
-    # @return [Fixnum] The port to listen on for web requests.
+    # @return [Integer] The port to listen on for web requests.
     def self.port
       env!("PORT").to_i
     end
@@ -148,12 +130,12 @@ module Vault
       !bool?('VAULT_TOOLS_DISABLE_SSL')
     end
 
-    # An environment variable converted to a Fixnum.
+    # An environment variable converted to a Integer.
     #
     # @param name [String] The name of the environment variable to fetch a
-    #   Fixnum for.
-    # @return [Fixnum] The number or nil if the value couldn't be coerced to a
-    #   Fixnum.
+    #   Integer for.
+    # @return [Integer] The number or nil if the value couldn't be coerced to a
+    #   Integer.
     def self.int(name)
       self[name] && self[name].to_i
     end
@@ -194,7 +176,7 @@ module Vault
 
     # The number of threads to use in Sidekiq workers.
     #
-    # @return [Fixnum] The number of threads from the `SIDEKIQ_CONCURRENCY`
+    # @return [Integer] The number of threads from the `SIDEKIQ_CONCURRENCY`
     #   environment variable or 25 if no variable is defined.
     def self.sidekiq_concurrency
       int('SIDEKIQ_CONCURRENCY') || 25

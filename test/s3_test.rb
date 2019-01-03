@@ -7,13 +7,14 @@ end
 class S3Test < Vault::TestCase
   include LoggedDataHelper
 
-  def setup
-    super
+  def around
     set_env 'APP_DEPLOY', 'test'
     set_env 'AWS_ACCESS_KEY_ID', 'fake access key id'
     set_env 'AWS_SECRET_ACCESS_KEY', 'fake secret access key'
-    AWS.stub!
-    @consumer = SomeS3Consumer.new
+    StubbedS3.enable! do
+      @consumer = SomeS3Consumer.new
+      yield
+    end
   end
 
   def log_output
@@ -23,13 +24,13 @@ class S3Test < Vault::TestCase
   # S3 writes should be logged.
   def test_write_logs
     @consumer.write('fake bucket', 'fake key', 'fake value')
-    assert_match /fake key/, log_output
+    assert_match(/fake key/, log_output)
   end
 
   # S3 reads should be logged.
   def test_read_logs
     @consumer.read('fake bucket', 'fake key')
-    assert_match /fake key/, log_output
+    assert_match(/fake key/, log_output)
   end
 
   # Should use S3 to write to bucket
