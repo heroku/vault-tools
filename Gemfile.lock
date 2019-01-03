@@ -16,7 +16,7 @@ PATH
       aws-sdk-s3 (~> 1.0)
       coderay
       excon
-      fernet (= 2.0.rc2)
+      fernet (= 2.0)
       rack (~> 2.0)
       rack-ssl-enforcer
       rollbar (~> 2.18.2)
@@ -45,7 +45,7 @@ GEM
     coderay (1.1.2)
     dotenv (2.5.0)
     excon (0.62.0)
-    fernet (2.0.rc2)
+    fernet (2.0)
       valcro (= 0.1)
     guard-compat (1.2.1)
     guard-minitest (2.4.6)
