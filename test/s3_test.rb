@@ -35,22 +35,21 @@ class S3Test < Vault::TestCase
 
   # Should use S3 to write to bucket
   def test_writes_to_s3_bucket
-    mock(@consumer).s3.mock!.buckets.
-      mock!.[]('fake bucket').
-      mock!.objects.
-      mock!.[]('fake key').
-      mock!.write('fake value')
+    mock(@consumer).s3.mock!.put_object({
+      bucket: 'fake bucket',
+      key: 'fake key',
+      body: 'fake value'
+    })
     @consumer.write('fake bucket', 'fake key', 'fake value')
   end
 
   # Should use S3 to read from bucket
   def test_reads_from_s3_bucket
       #s3.buckets[bucket].objects[key].read
-    mock(@consumer).s3.mock!.buckets.
-      mock!.[]('fake bucket').
-      mock!.objects.
-      mock!.[]('fake key').
-      mock!.read
+    mock(@consumer).s3.mock!.get_object({
+      bucket: 'fake bucket',
+      key: 'fake key'
+    }).mock!.body.mock!.read
     @consumer.read('fake bucket', 'fake key')
   end
 end

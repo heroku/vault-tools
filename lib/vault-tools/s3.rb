@@ -1,4 +1,4 @@
-require 'aws-sdk'
+require 'aws-sdk-s3'
 
 module S3
   extend self

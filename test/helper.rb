@@ -2,6 +2,7 @@ require 'vault-test-tools'
 require 'vault-tools'
 require 'rr'
 require 'minitest/around/unit'
+require 'pry'
 
 ENV['RACK_ENV'] = 'test'
 ENV['AWS_REGION'] = 'us-east-1'
@@ -51,8 +52,8 @@ module StubbedS3
     end
 
     def get_object(opts)
-      body = StringIO.new(@files["#{opts[:bucket]}::#{opts[:key]}"])
-      OpenStruct.new(body: body)
+      val = @files["#{opts[:bucket]}::#{opts[:key]}"]
+      OpenStruct.new(body: OpenStruct.new(read: val))
     end
   end
 
@@ -66,17 +67,6 @@ module StubbedS3
     end
 
     def enable!(opts={}, &block)
-      expected_aws_args = {
-        credentials: Aws::Credentials.new(opts.fetch(:access_key_id, 'FAKE_ID'),
-                                          opts.fetch(:secret_access_key, 'FAKE_KEY')),
-        region: opts.fetch(:aws_region, Config[:aws_region])
-      }
-      fake_new = lambda do |credentials: , region:|
-        #assert(expected_aws_args[:credentials].access_key_id == credentials.access_key_id)
-        #assert(expected_aws_args[:credentials].secret_access_key == credentials.secret_access_key)
-        #assert(expected_aws_args[:region] == region)
-        fake_client
-      end
       Aws::S3::Client.stub(:new, fake_client) { yield }
     end
   end
