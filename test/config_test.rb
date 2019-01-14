@@ -9,35 +9,6 @@ class ConfigTest < Vault::TestCase
     Config.reset!
   end
 
-  # Config.remote_env uses the Heroku API to read config vars from
-  # other apps.
-  def test_remote_env
-    api_mock = MiniTest::Mock.new
-    api_response = OpenStruct.new(body: {'DATABASE_URL' => 'postgres:///foo'})
-    Heroku::API.stub(:new, api_mock) do
-      api_mock.expect(:get_config_vars, api_response, ['app'])
-      assert_equal('postgres:///foo',
-                   Config.remote_env('app', 'DATABASE_URL'))
-    end
-  end
-
-  # Config.remote_env uses the Heroku API to read config vars from
-  # other apps.
-  def test_shared_config_loads_shared_with_correct_precedence
-    set_env('CONFIG_APP', 'vault-config')
-    api_mock = MiniTest::Mock.new
-    api_response = OpenStruct.new(body: {'HELLO' => 'world'})
-    Heroku::API.stub(:new, api_mock) do
-      api_mock.expect(:get_config_vars, api_response, ['vault-config'])
-      assert_equal(nil, Config[:hello])
-      Config.default(:hello, 'foo')
-      assert_equal('foo', Config[:hello])
-      # this is how we'll call it in the code
-      Config.load_shared!(Config[:config_app])
-      assert_equal('world', Config[:hello])
-    end
-  end
-
   # Config.env returns the value matching the specified environment
   # variable name.
   def test_env
@@ -55,7 +26,7 @@ class ConfigTest < Vault::TestCase
   # Config.env return nil if an unknown environment variable is
   # requested.
   def test_env_with_unknown_name
-    assert_equal(Config.env('UNKNOWN'), nil)
+    assert_nil(Config.env('UNKNOWN'))
   end
 
   # Config.env! returns the value matching the specified environment
@@ -132,7 +103,7 @@ class ConfigTest < Vault::TestCase
     end
   end
 
-  # Config.port converts the value from the environment to a Fixnum
+  # Config.port converts the value from the environment to a Integer
   def test_port_convert_to_int
     set_env 'PORT', "3000"
     assert_equal(3000, Config.port)
@@ -150,14 +121,14 @@ class ConfigTest < Vault::TestCase
 
   # Config.int(VAR) returns nil or VAR as integer.
   def test_int
-    assert_equal(nil, Config.int('FOO'))
+    assert_nil Config.int('FOO')
     set_env 'FOO', "3000"
     assert_equal(3000, Config.int('FOO'))
   end
 
   # Config.time returns nil or VAR as time
   def test_time
-    assert_equal(nil, Config.time('T'))
+    assert_nil(Config.time('T'))
     set_env 'T', '2000'
     assert_equal(Time.utc(2000), Config.time(:t))
     set_env 'T', '2000-2'
@@ -170,7 +141,7 @@ class ConfigTest < Vault::TestCase
 
   # Config.time returns nil or VAR as URI
   def test_uri
-    assert_equal(nil, Config.uri('URL'))
+    assert_nil(Config.uri('URL'))
     set_env 'URL', 'http://user:password@the-web.com/path/to/greatness?foo=bar'
     uri = Config.uri('URL')
     assert_equal('http', uri.scheme)

@@ -5,7 +5,7 @@ module Vault
     ID_CAPTURE = /\Aapp(\d+)\@[\w\.]+com\z/
     # Convert a core app ID into a Heroku app ID.
     #
-    # @param app_id [Fixnum] A core app ID.
+    # @param app_id [Integer] A core app ID.
     # @return [String] A Heroku ID that uniquely represents the app.
     def self.id_to_hid(app_id)
       "app#{app_id}@heroku.com"
@@ -13,7 +13,7 @@ module Vault
 
     # Convert a core app ID into a v5 UUID.
     #
-    # @param app_id [Fixnum] An app ID.
+    # @param app_id [Integer] An app ID.
     # @return [String] A v5 UUID that uniquely represents the app.
     def self.id_to_uuid(app_id)
       url = "https://vault.heroku.com/apps/#{app_id}"
@@ -24,7 +24,7 @@ module Vault
     #
     # @param heroku_id [String] A Heroku app ID, such as `app1234@heroku.com`.
     # @raise [ArgumentError] Raised if a malformed Heroku ID is provided.
-    # @return [Fixnum] The core app ID that uniquely represents the app.
+    # @return [Integer] The core app ID that uniquely represents the app.
     def self.hid_to_id(heroku_id)
       if app_id = heroku_id.slice(ID_CAPTURE, 1)
         app_id.to_i

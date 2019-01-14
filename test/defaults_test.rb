@@ -8,13 +8,13 @@ class DefaultsTest < Vault::TestCase
   end
 
   def test_default_when_no_value
-    assert_equal(Config[:max_connections], nil)
+    assert_nil(Config[:max_connections])
     Config.default(:max_connections, 10)
     assert_equal(Config[:max_connections], 10)
   end
 
   def test_default_with_int
-    assert_equal(Config[:max_connections], nil)
+    assert_nil(Config[:max_connections])
     Config.default(:max_connections, '10')
     assert_equal('10', Config[:max_connections])
     assert_equal(10, Config.int(:max_connections))
@@ -23,7 +23,7 @@ class DefaultsTest < Vault::TestCase
   end
 
   def test_default_with_time
-    assert_equal(Config[:date], nil)
+    assert_nil(Config[:date])
     Config.default(:date, '2013-01-01')
     assert_equal('2013-01-01', Config[:date])
     assert_equal(Time.utc(2013), Config.time(:date))
@@ -33,7 +33,7 @@ class DefaultsTest < Vault::TestCase
   end
 
   def test_default_with_array
-    assert_equal(Config[:array], nil)
+    assert_nil(Config[:array])
     Config.default(:array, '10')
     assert_equal('10', Config[:array])
     assert_equal(['10'], Config.array(:array))

@@ -3,8 +3,8 @@ require "vault-tools/version"
 require 'sinatra/base'
 require 'scrolls'
 require 'rack/ssl-enforcer'
-require 'heroku-api'
 require 'rollbar'
+require 'excon'
 
 # Yes, there's a lot of stuff on STDERR.  But its on
 # stderr and not stdout so you can pipe to /dev/null if
@@ -72,7 +72,6 @@ module Vault
     self.override_global_config
     self.load_shared_config
     self.init_scrolls
-    Tracing.configure
   end
 end
 
@@ -90,9 +89,6 @@ require 'vault-tools/time'
 require 'vault-tools/s3'
 require 'vault-tools/statement_store'
 require 'vault-tools/rollbar_helper'
-require 'vault-tools/tracing/sidekiq_client'
-require 'vault-tools/tracing/sidekiq_server'
-require 'vault-tools/tracing'
 
 Rollbar.configure do |config|
   config.environment = ENV['RACK_ENV'] || ENV['RAILS_ENV'] || ENV['APP_ENV'] || ENV['ROLLBAR_ENV'] || 'unassigned'

@@ -1,8 +1,11 @@
 require 'vault-test-tools'
 require 'vault-tools'
 require 'rr'
+require 'minitest/around/unit'
+require 'pry'
 
 ENV['RACK_ENV'] = 'test'
+ENV['AWS_REGION'] = 'us-east-1'
 
 module LoggedDataHelper
   def logged_data
@@ -39,69 +42,32 @@ class Vault::TestCase
 end
 
 module StubbedS3
-  class FakeFile
-    def initialize(contents=nil)
-      @contents = contents
-    end
-
-    def write(contents)
-      @contents = contents
-    end
-
-    def read
-      @contents
-    end
-  end
-
-  class FakeBucket
+  class FakeClient
     def initialize
       @files = {}
     end
 
-    def [](file_name)
-      @files[file_name] ||= FakeFile.new
+    def put_object(opts)
+      @files["#{opts[:bucket]}::#{opts[:key]}"] = opts[:body]
     end
 
-    def write(file_name, contents)
-      @files[file_name].write(contents)
-    end
-
-    def objects
-      self
-    end
-  end
-
-  class FakeClient
-    def initialize
-      @buckets = {}
-    end
-
-    def [](bucket_name)
-      @buckets[bucket_name] ||= FakeBucket.new
-    end
-
-    def buckets
-      self
+    def get_object(opts)
+      val = @files["#{opts[:bucket]}::#{opts[:key]}"]
+      OpenStruct.new(body: OpenStruct.new(read: val))
     end
   end
 
   class << self
     def seed(bucket, file, contents)
-      fake_client.buckets[bucket].objects[file].write(contents)
+      fake_client.put_object({bucket: bucket, key: file, body: contents})
     end
 
     def fake_client
       @client ||= FakeClient.new
     end
 
-    def enable!(env, opts={})
-      AWS.stub!
-      expected_aws_args = {
-        access_key_id: opts.fetch(:access_key_id, 'FAKE_ID'),
-        secret_access_key: opts.fetch(:secret_access_key, 'FAKE_KEY'),
-        use_ssl: opts.fetch(:use_ssl, true)
-      }
-      env.stub(AWS::S3).new(expected_aws_args) { fake_client }
+    def enable!(opts={}, &block)
+      Aws::S3::Client.stub(:new, fake_client) { yield }
     end
   end
 end

@@ -1,4 +1,4 @@
-require 'aws-sdk'
+require 'aws-sdk-s3'
 
 module S3
   extend self
@@ -10,7 +10,7 @@ module S3
   # @param value [String]
   def write(bucket, key, value)
     Vault::Log.log(:fn => __method__, :key => key) do
-      s3.buckets[bucket].objects[key].write(value)
+      s3.put_object({bucket: bucket, key: key, body: value})
     end
   end
 
@@ -20,17 +20,17 @@ module S3
   # @param key [String]
   def read(bucket, key)
     Vault::Log.log(:fn => __method__, :key => key) do
-      s3.buckets[bucket].objects[key].read
+      s3.get_object({bucket: bucket, key: key}).body.read
     end
   end
 
-  # Get the underlying AWS::S3 instance, creating it using environment vars
-  # if necessary.
+  # Get the underlying AWS::S3::Client instance, creating it using environment
+  # vars if necessary.
   def s3
-    @s3 ||= AWS::S3.new(
-      :access_key_id => Config.env('AWS_ACCESS_KEY_ID'),
-      :secret_access_key => Config.env('AWS_SECRET_ACCESS_KEY'),
-      :use_ssl => true
+    @s3 ||= Aws::S3::Client.new(
+      credentials: Aws::Credentials.new(Config.env('AWS_ACCESS_KEY_ID'),
+                                        Config.env('AWS_SECRET_ACCESS_KEY')),
+      region: Config.env('AWS_REGION')
     )
   end
 

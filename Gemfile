@@ -4,12 +4,13 @@ source 'https://rubygems.org'
 gemspec
 
 group :development do
-  gem 'rake', '~> 10.4'
+  gem 'rake', '~> 12.3'
   gem 'shotgun', '~> 0.9.2'
   gem 'yard-sinatra'
 end
 
 group :test do
   gem 'guard-minitest'
-  gem 'vault-test-tools', '~> 0.4.2'
+  gem 'minitest-around'
+  gem 'vault-test-tools', '~> 1.0.0'
 end
