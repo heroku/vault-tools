@@ -31,10 +31,11 @@ class LogTest < Vault::TestCase
 
   # Vault::Log.count_status emits metrics to measure HTTP responses.
   def test_count_status
-    Vault::Log.count_status(201)
-    assert_equal '1', logged_data['count#test-app.http.201']
-    assert_equal '1', logged_data['count#test-app.http.2xx']
-    assert_equal 'test-deploy', logged_data['source']
+    Vault::Log.count_status(201, request_path: '/some/request/path')
+    assert_equal 1, logdata['count#test-app.http.201']
+    assert_equal 1, logdata['count#test-app.http.2xx']
+    assert_equal '/some/request/path', logdata['request_path']
+    assert_equal 'test-deploy', logdata['source']
   end
 
   def test_measure

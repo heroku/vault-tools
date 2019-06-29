@@ -105,7 +105,7 @@ module Vault
     # Log details about the request including how long it took.
     after do
       @action ||= 'unknown'
-      Log.count_status(response.status)
+      Log.count_status(response.status, request_path: request.path_info)
       Log.time("http.#{@action}", (Time.now - @start_request) * 1000)
     end
 

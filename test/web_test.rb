@@ -155,6 +155,7 @@ class WebTest < Vault::TestCase
     head '/'
     assert_equal '1', logged_data['count#test-app.http.200']
     assert_equal '1', logged_data['count#test-app.http.2xx']
+    assert_equal '/', logged_data['request_path']
     assert_equal(200, last_response.status)
   end
 
