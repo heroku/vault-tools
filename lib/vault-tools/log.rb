@@ -20,8 +20,8 @@ module Vault
     # well as classes of HTTP status codes.
     #
     # @param status [Integer] The HTTP status code to record.
-    def self.count_status(status)
-      count("http.#{status}")
+    def self.count_status(status, data)
+      count("http.#{status}", 1, data)
       if status_prefix = status.to_s.match(/\d/)[0]
         count("http.#{status_prefix}xx")
       end
