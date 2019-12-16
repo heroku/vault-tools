@@ -33,7 +33,7 @@ GEM
     aws-sigv4 (1.0.3)
     coderay (1.1.2)
     dotenv (2.5.0)
-    excon (0.62.0)
+    excon (0.71.0)
     fernet (2.0)
       valcro (= 0.1)
     guard-compat (1.2.1)
