@@ -60,7 +60,7 @@ GEM
     rack-ssl-enforcer (0.2.9)
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
-    rake (12.3.2)
+    rake (13.0.1)
     rdoc (6.1.1)
     rollbar (2.18.2)
       multi_json
@@ -95,7 +95,7 @@ DEPENDENCIES
   guard-minitest
   minitest-around
   pry
-  rake (~> 12.3)
+  rake (~> 13.0)
   rdoc
   shotgun (~> 0.9.2)
   vault-test-tools (~> 1.0.0)
