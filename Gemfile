@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 gemspec
 
 group :development do
-  gem 'rake', '~> 12.3'
+  gem 'rake', '~> 13.0'
   gem 'shotgun', '~> 0.9.2'
   gem 'yard-sinatra'
 end
