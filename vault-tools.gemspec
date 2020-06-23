@@ -7,7 +7,7 @@ require 'vault-tools/version'
 Gem::Specification.new do |gem|
   gem.name          = "vault-tools"
   gem.version       = Vault::Tools::VERSION
-  gem.authors       = ["Chris Continanza", "Jamu Kakar", "Kenny Parnell"]
+  gem.authors       = ["Heroku Vault Team"]
   gem.email         = ["csquared@heroku.com", "christopher.continanza@gmail.com",
                        "jkakar@heroku.com","jkakar@kakar.ca",
                        "kennyp@heroku.com", "k.parnell@gmail.com"]
