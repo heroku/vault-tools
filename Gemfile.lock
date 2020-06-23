@@ -86,7 +86,7 @@ GEM
       rack-test (~> 1.1)
       rr
       scrolls (= 0.9)
-    yard (0.9.16)
+    yard (0.9.25)
     yard-sinatra (1.0.0)
       yard (~> 0.7)
 
