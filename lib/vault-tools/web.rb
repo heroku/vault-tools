@@ -100,6 +100,13 @@ module Vault
     # Start timing the request.
     before do
       @start_request = Time.now
+      # if client sends content_type: application/json which no longer works
+      # https://github.com/puma/puma/compare/4.3.1...4.3.5#commitcomment-39478516
+      #
+      # fixing this here so that we do not break all client users at once
+      if request.env["CONTENT_TYPE"].nil? && request.env["HTTP_CONTENT_TYPE"]
+        request.env["CONTENT_TYPE"] = request.env["HTTP_CONTENT_TYPE"]
+      end
     end
 
     # Log details about the request including how long it took.
