@@ -1,7 +1,7 @@
 version: 2.1
 
 jobs:
-  build:
+  one:
     machine: true
 
     steps:
@@ -15,3 +15,24 @@ jobs:
             gem install bundler -v '< 2'
             bundle install --jobs=3 --retry=3 --deployment --path=${BUNDLE_PATH:-vendor/bundle}
             bundle exec rake
+  two:
+    machine: true
+
+    steps:
+      - checkout
+      - run:
+          command: |
+            rvm use 2.5.3 --install --binary --fuzzy
+            export BUNDLE_GEMFILE=$PWD/Gemfile
+            echo "Setting up build cache"
+            ruby --version
+            gem install bundler -v '< 2'
+            bundle install --jobs=3 --retry=3 --deployment --path=${BUNDLE_PATH:-vendor/bundle}
+            bundle exec rake
+workflows:
+  version: 2.1
+  build: 
+    parallelism: 2
+    jobs: 
+      - one
+      - two
