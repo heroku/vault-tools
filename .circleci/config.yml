@@ -32,7 +32,6 @@ jobs:
 workflows:
   version: 2.1
   build: 
-    parallelism: 2
     jobs: 
       - one
       - two
