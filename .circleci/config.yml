@@ -9,7 +9,6 @@ jobs:
       - run:
           command: |
             rvm use 2.6.0 --install --binary --fuzzy
-#           rvm use 2.5.3 --install --binary --fuzzy
             export BUNDLE_GEMFILE=$PWD/Gemfile
             echo "Setting up build cache"
             ruby --version
