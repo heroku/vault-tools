@@ -1,6 +1,7 @@
 language: ruby
 cache: bundler
 rvm:
+  - 2.7.1
   - 2.6.0
   - 2.5.3
 before_install:
