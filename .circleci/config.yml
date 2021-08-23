@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   build:
     docker: 
-      - image: circleci/ruby:2.7.1
+      - image: circleci/ruby:2.5.3
     steps:
       - checkout
       - run: export BUNDLE_GEMFILE=$PWD/Gemfile
