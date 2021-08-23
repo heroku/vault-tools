@@ -1,0 +1,14 @@
+version: 2.1
+
+jobs:
+  build:
+    docker: 
+      - image: circleci/ruby:2.7.1
+    steps:
+      - checkout
+      - run: export BUNDLE_GEMFILE=$PWD/Gemfile
+      - run: ruby --version
+      - run: gem update --system
+      - run: gem install bundler -v '< 2'
+      - run: bundle install --jobs=3 --retry=3 --deployment --path=${BUNDLE_PATH:-vendor/bundle}
+      - run: bundle exec rake
