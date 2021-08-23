@@ -3,7 +3,7 @@
 Tools is the English word for ツール.  Tooling for the Heroku Vault
 team to enable faster bootstrapping for Ruby projects.
 
-[![Build Status](https://travis-ci.org/heroku/vault-tools.png?branch=master)](https://travis-ci.org/heroku/vault-tools)
+[![CircleCI](https://circleci.com/gh/heroku/vault-tools/tree/master.svg?style=shield&circle-token=39ec638ab252a4440ca919f9b09dc258b4459c58)](_https://circleci.com/gh/heroku/vault-tools/tree/master_)
 
 ## Installation
 
