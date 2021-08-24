@@ -14,7 +14,7 @@ Gem::Specification.new do |gem|
   gem.description   = "Basic tools for Heroku Vault's Ruby projects"
   gem.summary       = "Test classes, base web classes, and helpers - oh my!"
   gem.homepage      = ""
-  gem.required_ruby_version = '>= 2.5.3'
+  gem.required_ruby_version = '>= 2.7.1'
 
   gem.files         = `git ls-files`.split($/)
   gem.test_files    = gem.files.grep('^(test|spec|features)/')

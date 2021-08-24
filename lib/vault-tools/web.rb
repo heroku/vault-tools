@@ -53,7 +53,7 @@ module Vault
       # protect! is used
       %w{get put post delete head options path link unlink}.each do |meth|
         define_method "#{meth}_unprotected".to_sym do |path, opts = {}, &block|
-          pattern = compile!(meth.upcase, path, block, opts).first
+          pattern = compile!(meth.upcase, path, block, **opts).first
           set :unprotected_paths, settings.unprotected_paths + [pattern]
           if meth.downcase == 'get'
             conditions = @conditions.dup
