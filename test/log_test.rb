@@ -116,6 +116,6 @@ class LogTest < Vault::TestCase
     assert_equal 'true', logged_data['A']
     assert_equal 'true', logged_data['B']
     assert_equal 'test-deploy', logged_data['source']
-    assert_match (/\d/), logged_data['elapsed']
+    assert_match(/\d/, logged_data['elapsed'])
   end
 end
