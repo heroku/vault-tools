@@ -93,3 +93,7 @@ Generate the API documentation:
 ## Releasing
 
     > bundle exec rake release
+
+## Release Notes
+  Version 2.1.0 (2021-08-26):
+    guard-minitest was removed due to it causing problems with the ruby version upgrade. Was not actively used anymore. Hasn't been updated in a long time.
