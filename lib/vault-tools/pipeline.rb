@@ -16,7 +16,7 @@ module Vault
   class Pipeline
     def self.use(*args)
       @filters ||= []
-      @filters.push *args
+      @filters.push(*args)
     end
 
     def self.filters

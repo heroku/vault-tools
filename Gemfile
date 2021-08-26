@@ -10,7 +10,6 @@ group :development do
 end
 
 group :test do
-  gem 'guard-minitest'
   gem 'minitest-around'
-  gem 'vault-test-tools', '~> 1.0.0'
+  gem 'vault-test-tools', '~> 1.1.0'
 end
