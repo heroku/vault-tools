@@ -247,6 +247,18 @@ class WebTest < Vault::TestCase
     assert_equal request_id, last_response.headers['Request-ID']
   end
 
+  def test_that_metadata_gets_logged
+    mock(Vault::Log).count_status(200, {
+      'user' => 'amanda',
+      'some_flag' => 'true',
+      request_path:  '/logging-test'
+    })
+    app.get '/logging-test' do
+      @metadata = {'user' => 'amanda', 'some_flag' => 'true'}
+    end
+    get '/logging-test'
+  end
+
   def test_that_excon_proxies_request_id
     request_id = 'JKJK-123'
     Excon.stub(
