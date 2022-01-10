@@ -95,5 +95,8 @@ Generate the API documentation:
     > bundle exec rake release
 
 ## Release Notes
+  Version 2.1.1 (2022-01-06):
+    - Added tooling to support metadata tags on request status metrics.
+    - Reverted change to minimum supported ruby version.
   Version 2.1.0 (2021-08-26):
     guard-minitest was removed due to it causing problems with the ruby version upgrade. Was not actively used anymore. Hasn't been updated in a long time.
