@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    vault-tools (2.1.0)
+    vault-tools (2.1.1)
       aws-sdk-s3 (~> 1.0)
       coderay
       excon
