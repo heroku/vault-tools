@@ -37,7 +37,7 @@ GEM
     excon (0.85.0)
     fernet (2.0)
       valcro (= 0.1)
-    jmespath (1.4.0)
+    jmespath (1.6.1)
     logfmt (0.0.9)
     method_source (1.0.0)
     mini_portile2 (2.6.1)
