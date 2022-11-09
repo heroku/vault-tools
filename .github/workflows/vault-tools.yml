@@ -1,4 +1,4 @@
-name: heroku/vault-tools/heroku/vault-tools
+name: heroku/vault-tools
 on:
   push:
 jobs:
