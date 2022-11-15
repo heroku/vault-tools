@@ -6,11 +6,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - run: export BUNDLE_GEMFILE=$PWD/Gemfile
-    - run: gem update --system
-    - run: gem install bundler -v '< 2'
     - uses: ruby/setup-ruby@v1
       with:
-        ruby-version: 2.7
-    - run: bundle install --jobs=3 --retry=3 --path=${BUNDLE_PATH:-vendor/bundle}
+        ruby-version: 2.7.1
+        bundler-cache: true
     - run: bundle exec rake
