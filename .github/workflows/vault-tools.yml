@@ -3,7 +3,7 @@ on:
   push:
 jobs:
   build:
-    runs-on: sfdc-hk-ubuntu-latest
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
     - run: export BUNDLE_GEMFILE=$PWD/Gemfile
