@@ -1,7 +1,6 @@
 require 'vault-test-tools'
 require 'vault-tools'
 require 'rr'
-require 'minitest/around/unit'
 require 'pry'
 
 ENV['RACK_ENV'] = 'test'
