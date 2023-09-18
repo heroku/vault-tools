@@ -28,7 +28,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'rollbar'
   gem.add_dependency 'aws-sdk-s3', '~> 1.0'
   gem.add_dependency 'excon'
-  gem.add_dependency 'rack', '~> 2.0'
+  gem.add_dependency 'rack', '>= 2', '< 4'
   gem.add_dependency 'coderay'
 
   gem.add_development_dependency 'dotenv'
