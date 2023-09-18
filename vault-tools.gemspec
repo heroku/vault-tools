@@ -25,7 +25,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'uuidtools'
   gem.add_dependency 'rack-ssl-enforcer'
   gem.add_dependency 'fernet', '2.0'
-  gem.add_dependency 'rollbar', '~> 2.18.2'
+  gem.add_dependency 'rollbar'
   gem.add_dependency 'aws-sdk-s3', '~> 1.0'
   gem.add_dependency 'excon'
   gem.add_dependency 'rack', '~> 2.0'

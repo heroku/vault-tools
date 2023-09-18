@@ -95,6 +95,10 @@ Generate the API documentation:
     > bundle exec rake release
 
 ## Release Notes
+  Version 2.2.0 (2023-09-18):
+    - Changes syntax for Rollbar helper
+    - Bumps rollbar gem version 
+    - Unpings rollbar gem version
   Version 2.1.1 (2022-01-06):
     - Added tooling to support metadata tags on request status metrics.
     - Reverted change to minimum supported ruby version.
