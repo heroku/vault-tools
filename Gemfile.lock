@@ -10,7 +10,7 @@ PATH
       rack-ssl-enforcer
       rollbar
       scrolls (~> 0.9)
-      sinatra (~> 2.0.4)
+      sinatra (>= 2.0.4, < 3.2.0)
       uuidtools
 
 GEM
@@ -44,7 +44,7 @@ GEM
     minitest (5.14.4)
     minitest-around (0.5.0)
       minitest (~> 5.0)
-    mustermann (1.1.1)
+    mustermann (2.0.2)
       ruby2_keywords (~> 0.0.1)
     nokogiri (1.12.3)
       mini_portile2 (~> 2.6.1)
@@ -53,8 +53,8 @@ GEM
       coderay (~> 1.1)
       method_source (~> 1.0)
     racc (1.5.2)
-    rack (2.2.3)
-    rack-protection (2.0.8.1)
+    rack (2.2.8)
+    rack-protection (2.2.4)
       rack
     rack-ssl-enforcer (0.2.9)
     rack-test (1.1.0)
@@ -67,12 +67,12 @@ GEM
     scrolls (0.9.1)
     shotgun (0.9.2)
       rack (>= 1.0)
-    sinatra (2.0.8.1)
-      mustermann (~> 1.0)
-      rack (~> 2.0)
-      rack-protection (= 2.0.8.1)
+    sinatra (2.2.4)
+      mustermann (~> 2.0)
+      rack (~> 2.2)
+      rack-protection (= 2.2.4)
       tilt (~> 2.0)
-    tilt (2.0.10)
+    tilt (2.3.0)
     uuidtools (2.2.0)
     valcro (0.1)
     vault-test-tools (1.1.0)

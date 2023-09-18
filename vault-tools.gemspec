@@ -21,7 +21,7 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
 
   gem.add_dependency 'scrolls', '~> 0.9'
-  gem.add_dependency 'sinatra', '~> 2.0.4'
+  gem.add_dependency 'sinatra', '>= 2.0.4', '< 3.2.0'
   gem.add_dependency 'uuidtools'
   gem.add_dependency 'rack-ssl-enforcer'
   gem.add_dependency 'fernet', '2.0'
